@@ -22,6 +22,7 @@ HANDLE m_radio; //Windows handle to local radio, declared here as a global varia
 HANDLE hBluetooth_port_operations;
 HBLUETOOTH_AUTHENTICATION_REGISTRATION hRegHandle = 0;
 int serial_port;
+std::string userCommand;
 
 int main(int argc, char** argv) //main code here.
 
@@ -134,20 +135,44 @@ int main(int argc, char** argv) //main code here.
 	//open created Bluetooth COM port and set the correct baudrates
 	cout << "open created Bluetooth COM port and set the correct baudrates" << endl;
 	
-	/*if (Set_serial_port_connection(hBluetooth_port_operations) == 0) {
+	if (Set_serial_port_connection(&hBluetooth_port_operations) == 0) {
 		cout << "Baudrates succesfully set for the created com port" << endl;
 	}
 	else {
 		cout << "Something is wrong! App is closing" << endl;
 		return -1;
-	}*/
+	}
 
+	while (true) {
+		std::cout << "Enter ELM327 command (or 'exit' to quit): ";
+		std::getline(std::cin, userCommand); // Read entire line
+
+		if (userCommand == "exit") {
+			break; // Exit the loop if the user types "exit"
+		}
+
+
+
+		if (AT_Z_Command(&hBluetooth_port_operations, userCommand) == 0) { // Send command
+
+			std::string elmResponse = readFromCOM3(&hBluetooth_port_operations); // Read response
+
+			if (!elmResponse.empty()) {
+				std::cout << "ELM327 response: " << elmResponse << std::endl;
+			}
+			else {
+				std::cerr << "No response received from ELM327." << std::endl;
+			}
+		}
+	}
+
+	//Set_timeouts_for_SerialPortConnection(m_radio);
 	//Send AT Z command to check communication and uC version
-	cout << "Check communication by asking the ELMv327 it's version number" << endl;
-	AT_Z_Command(hBluetooth_port_operations);
+	/*cout << "Check communication by asking the ELMv327 it's version number" << endl;
+	AT_Z_Command(&hBluetooth_port_operations);
+	readFromCOM3(&hBluetooth_port_operations);*/
 
-
-	cout << "Press any key to exit" << endl;
+	cout << "\nPress any key to exit" << endl; 
 
 	CloseAllHandle();
 	x = _getch();

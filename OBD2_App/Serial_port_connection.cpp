@@ -1,21 +1,22 @@
 #include <Serial_port_connection.h>
 
 //Open and det correct baudrate for the Bluetooth COM port
-int Set_serial_port_connection(HANDLE hBluetooth_port) {
+int Set_serial_port_connection(HANDLE* hBluetooth_port) {
 
-	LPCSTR serial_COM3 = "COM3";
+	//LPCSTR serial_COM3 = L"\\\\.\\COM3";
+	std::wstring serial_COM3 = L"\\\\.\\COM3";
 	DCB serialParams = { 0 };
 	serialParams.DCBlength = sizeof(serialParams);
 
-	hBluetooth_port = CreateFileA(
-		serial_COM3,
+	*hBluetooth_port = CreateFile(
+		serial_COM3.c_str(),
 		GENERIC_READ | GENERIC_WRITE,
 		0,
-		0,
+		NULL,
 		OPEN_EXISTING,
-		FILE_ATTRIBUTE_NORMAL,
-		0);
-	if (hBluetooth_port == INVALID_HANDLE_VALUE)
+		0,
+		NULL);
+	if (*hBluetooth_port == INVALID_HANDLE_VALUE)
 	{
 		if (GetLastError() == ERROR_FILE_NOT_FOUND)
 		{
@@ -29,14 +30,14 @@ int Set_serial_port_connection(HANDLE hBluetooth_port) {
 		
 	///-----------------------------Configure port------------------------------------------------------------
 
-	if (!GetCommState(hBluetooth_port, &serialParams)) {
+	if (!GetCommState(*hBluetooth_port, &serialParams)) {
 		cout << "GetCommState: Error getting serial port state" << endl;
 		return -1;
 	}
 	else {
 		cout << "GetCommState: Serial port state returned succesfully" << endl;
 	}
-	serialParams.BaudRate = CBR_115200;
+	/*serialParams.BaudRate = CBR_115200;
 	serialParams.ByteSize = 8;
 	serialParams.StopBits = ONESTOPBIT;
 	serialParams.Parity = NOPARITY;
@@ -47,7 +48,7 @@ int Set_serial_port_connection(HANDLE hBluetooth_port) {
 	}
 	else {
 		cout << "SetCommState: Serial port state returned succesfully" << endl;
-	}
+	}*/
 	
 	return 0;
 }
@@ -57,11 +58,11 @@ int Set_timeouts_for_SerialPortConnection(HANDLE hBluetooth_port) {
 
 	// Set timeouts
 	COMMTIMEOUTS timeout = { 0 };
-	timeout.ReadIntervalTimeout = 50;
-	timeout.ReadTotalTimeoutConstant = 50;
-	timeout.ReadTotalTimeoutMultiplier = 50;
-	timeout.WriteTotalTimeoutConstant = 50;
-	timeout.WriteTotalTimeoutMultiplier = 10;
+	timeout.ReadIntervalTimeout = MAXDWORD;
+	timeout.ReadTotalTimeoutConstant = 0;
+	timeout.ReadTotalTimeoutMultiplier = 0;
+	timeout.WriteTotalTimeoutConstant = 1;
+	timeout.WriteTotalTimeoutMultiplier = 1;
 
 
 	if (!SetCommTimeouts(hBluetooth_port, &timeout))
