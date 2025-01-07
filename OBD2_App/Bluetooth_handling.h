@@ -1,3 +1,4 @@
+#pragma once
 #include <SDKDDKVer.h>
 #include <windows.h>
 #include <BluetoothAPIs.h> 
@@ -13,27 +14,21 @@
 #pragma comment(lib, "Bthprops.lib")
 
 using namespace std;
+// Define maximum name length for Bluetooth devices.
+#define MAX_BLUETOOTH_DEVICE_NAME 248
 
-#define MAX_NAME 248
+// Declare global Bluetooth radio handle and authentication registration handle.
+extern HANDLE g_bluetoothRadio;
+extern HBLUETOOTH_AUTHENTICATION_REGISTRATION g_authenticationHandle;
 
-typedef DWORD(WINAPI* f_BluetoothEnableRadio)(BOOL);
-typedef int (WINAPI* f_BthSetMode)(enum RadioMode);
-extern HANDLE m_radio; //Windows handle to local radio, declared here as a global variable
-extern HBLUETOOTH_AUTHENTICATION_REGISTRATION hRegHandle;
-/// Bluetooth states.
-enum RadioMode //enumeration created for bluetooth radio state.
-{
-	/// Bluetooth off.
-	Off,
-	/// Bluetooth is on but not discoverable.
-	On,
-	/// Bluetooth is on and discoverable.
-	Discoverable,
-};
+// Check if the Bluetooth radio is enabled.
+int IsBluetoothEnabled(void);
 
-//================================function prototypes==================================================================================//
-int IsBluetoothOn(void);//returns 0 if bluetooth radio off, returns 1 if On and returns -1 if the function failed to complete.
-bool pairDevice(BLUETOOTH_DEVICE_INFO); //returns true if successful and false if not takes bluetooth deivce info struct.
-bool FindBtDev(BLUETOOTH_DEVICE_INFO*); //returns true if successful and false if not takes bluetooth deivce info struct's pointer.
-void CloseAllHandle(void);//a function to close all windows handles. wil be called at last as a clean up function.
-//======================================================================================================================================
+// Search for a specific Bluetooth device.
+bool FindBluetoothDevice(BLUETOOTH_DEVICE_INFO* btDeviceInfo);
+
+// Pair with a Bluetooth device.
+bool PairBluetoothDevice(BLUETOOTH_DEVICE_INFO btDeviceInfo);
+
+// Close Bluetooth handles and unregister authentication.
+void CloseBluetoothHandles(void);
