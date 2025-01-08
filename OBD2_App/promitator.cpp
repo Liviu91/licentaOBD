@@ -20,26 +20,26 @@ int main(int argc, char** argv)
     bluetoothEnabledStatus = IsBluetoothEnabled(); // Verify if Bluetooth is activated.
 
     if (bluetoothEnabledStatus == 0) { // Bluetooth is deactivated.
-        cout << "Enable bluetooth Manually and restart program" << endl;
-        cout << "Press any key to exit" << endl;
+        std::cout << "Bluetooth is disabled. Enable it and restart the application." << std::endl;
+        std::cout << "Press any key to exit" << std::endl;
         exitKey = _getch();
         return 0;
     }
     else if (bluetoothEnabledStatus == -1) {
-        cout << "Error Occured Closing Program" << endl;
-        cout << "Press any key to exit" << endl;
+        std::cerr << "Error initializing Bluetooth. Exiting." << std::endl;
+        std::cout << "Press any key to exit" << std::endl;
         exitKey = _getch();
-        return 0;
+        return -1;
     }
 
     // If Bluetooth is enabled, proceed with device discovery.
     deviceFoundResult = FindBluetoothDevice(&targetBtDeviceInfo);
-    if (deviceFoundResult == false)
-    {// Device not found.
+    if (!deviceFoundResult) {
+	    // Device not found.
         // Device discovery was unsuccessful.
-        cout << "Error cannot find device" << endl;
-        cout << "Searching again, Press any key to exit program" << endl;
-        while (FindBluetoothDevice(&targetBtDeviceInfo) == false) { // Continue searching for the device.
+        std::cerr << "OBD-II adapter not detected." << std::endl;
+        std::cout << "Retrying. Press any key to quit" << std::endl;
+        while (!FindBluetoothDevice(&targetBtDeviceInfo)) { // Continue searching for the device.
             Sleep(1000);
             if (_getch()) { // Exit if any key is pressed.
                 CloseBluetoothHandles();
@@ -50,27 +50,27 @@ int main(int argc, char** argv)
 
     if (!BluetoothIsConnectable(g_bluetoothRadio)) // Check if the radio accepts incoming connections.
     { // Attempt to enable incoming Bluetooth connections if disabled.
-        cout << "Incomming connection was not ON, turning it On" << endl;
+        std::cout << "Enabling Bluetooth incoming connections..." << std::endl;
         if (BluetoothEnableIncomingConnections(g_bluetoothRadio, TRUE))
-            cout << "Incomming connections enabled" << endl;
+            std::cout << "Succesfully enabled incoming connections" << std::endl;
         else
-            cout << "Error Unable to enable incoming connections" << endl;
+            std::cerr << "Failed to enable incoming connections" << std::endl;
     }
     else
-        cout << "Incomming connection was ON!" << endl;
 
-
-    if (targetBtDeviceInfo.fConnected == FALSE && targetBtDeviceInfo.fRemembered == TRUE) { // Device is remembered but not currently connected.
-        cout << "Device is out of range or switched Off." << endl;
+    if (!targetBtDeviceInfo.fConnected && !targetBtDeviceInfo.fRemembered) { // Device is remembered but not currently connected.
+        std::cout << "Device is out of range or switched Off." << std::endl;
     }
 
-    if (targetBtDeviceInfo.fRemembered == FALSE && targetBtDeviceInfo.fConnected == FALSE) { // If the device is not remembered, attempt to pair and connect.
-        cout << "Device Found Attempting to connect" << endl;
+    if (!targetBtDeviceInfo.fConnected && targetBtDeviceInfo.fRemembered) {
+        std::cout << "OBD-II adapter paired but not connected. Check power and range." << std::endl;
+    } else if (!targetBtDeviceInfo.fRemembered && !targetBtDeviceInfo.fConnected) {
+        std::cout << "Connecting and pairing with OBD-II adapter..." << std::endl;
 
-        if (targetBtDeviceInfo.fAuthenticated == FALSE) { // Attempt authentication if not already done.
+        if (!targetBtDeviceInfo.fAuthenticated) { // Attempt authentication if not already done.
             BluetoothGetDeviceInfo(g_bluetoothRadio, &targetBtDeviceInfo); // Retrieve device info.
             if (!PairBluetoothDevice(targetBtDeviceInfo)) { // Pair with the device.
-                cout << "Authentication failed, Try manually" << endl;
+                std::cerr << "Pairing failed. Try again" << std::endl;
                 CloseBluetoothHandles();
                 return 0;
             }
@@ -78,13 +78,15 @@ int main(int argc, char** argv)
 
         serviceStateResult = BluetoothSetServiceState(g_bluetoothRadio, &targetBtDeviceInfo, &SerialPortServiceClass_UUID, BLUETOOTH_SERVICE_ENABLE); // Enable serial port service.
         if (serviceStateResult != ERROR_SUCCESS && serviceStateResult != E_INVALIDARG) {// Verify if the service was successfully enabled (excluding invalid arguments).
-            if (serviceStateResult == ERROR_INVALID_PARAMETER)
-                cout << "Invalid Parameter" << endl;
+            if (serviceStateResult == ERROR_INVALID_PARAMETER) {
+                std::cerr << "Invalid serial port service parameter." << std::endl;
+            } else if (serviceStateResult == ERROR_SERVICE_DOES_NOT_EXIST) {
+                std::cerr << "Serial port service unavailable." << std::endl;
+            } else {
+                std::cerr << "Failed to enable serial port service (Code: " << serviceStateResult << ")." << std::endl;
+            }
 
-            if (serviceStateResult == ERROR_SERVICE_DOES_NOT_EXIST)
-                cout << "Service not found" << endl;
-
-            cout << "Press any key to exit" << endl;
+            std::cout << "Press any key to exit" << std::endl;
             CloseBluetoothHandles();
             exitKey = _getch();
             return 0;
@@ -93,38 +95,51 @@ int main(int argc, char** argv)
         BluetoothGetDeviceInfo(g_bluetoothRadio, &targetBtDeviceInfo); // Update device information.
         BluetoothUpdateDeviceRecord(&targetBtDeviceInfo);
 
-        cout << "Name: " << targetBtDeviceInfo.szName << endl;
+        std::cout << "Connection to OBD-II adapter established." << std::endl;
+        std::cout << "Device Details:" << std::endl;
+        std::cout << "Device Name: " << targetBtDeviceInfo.szName << std::endl;
 
-        wprintf(L"  \tAddress: %02X:%02X:%02X:%02X:%02X:%02X\r\n", targetBtDeviceInfo.Address.rgBytes[5],
+        wprintf(L"  \tDevice Address: %02X:%02X:%02X:%02X:%02X:%02X\r\n", targetBtDeviceInfo.Address.rgBytes[5],
 
             targetBtDeviceInfo.Address.rgBytes[4], targetBtDeviceInfo.Address.rgBytes[3], targetBtDeviceInfo.Address.rgBytes[2],
 
             targetBtDeviceInfo.Address.rgBytes[1], targetBtDeviceInfo.Address.rgBytes[0]);
-        wprintf(L"  \tConnected: %s\r\n", targetBtDeviceInfo.fConnected ? L"true" : L"false");
-        wprintf(L"  \tAuthenticated: %s\r\n", targetBtDeviceInfo.fAuthenticated ? L"true" : L"false");
-        wprintf(L"  \tRemembered: %s\r\n", targetBtDeviceInfo.fRemembered ? L"true" : L"false");
+        wprintf(L"  \tDevice Connection: %s\r\n", targetBtDeviceInfo.fConnected ? L"true" : L"false");
+        wprintf(L"  \tDevice Authentication: %s\r\n", targetBtDeviceInfo.fAuthenticated ? L"true" : L"false");
+        wprintf(L"  \tDevice Remembered: %s\r\n", targetBtDeviceInfo.fRemembered ? L"true" : L"false");
 
-        cout << "Operation Successful check if comport created" << endl;
+        std::cout << "Operation Successful check if comport created" << std::endl;
     }
 
 
-    cout << "Opening created Bluetooth COM port and setting baudrates" << endl;
+    std::cout << "Opening created Bluetooth COM port and setting baudrates" << std::endl;
     
     // Set up the serial port connection.
     if (SetupSerialPort(&hBluetoothSerialPort) == 0) {
         // Serial port setup was successful.
     }
     else {
-        cout << "Error setting up serial port. Closing application." << endl;
+        std::cout << "Error setting up serial port. Closing application." << std::endl;
+        return -1;
+    }
+
+    //Initialize ELM327
+    //Send AT E0 command to stop it from echoing back the command send. It should, only, print the actual response
+    //Reset ELM327 with an AT Z command to get the version number
+    if (InitializeELM327(&hBluetoothSerialPort) == 0) {
+        std::cout << "Init succesfull!" << std::endl;
+    }
+    else {
+        std::cerr << "Init failed!" << std::endl;
         return -1;
     }
 
     // Main command loop.
     while (true) {
-        std::cout << "Enter ELM327 command (or 'EXIT' to quit): ";
+        std::cout << "Enter ELM327 command (or 'exit' to quit): ";
         std::getline(std::cin, elm327Command); // Read input command.
 
-        if (elm327Command == "EXIT") {
+        if (elm327Command == "exit") {
             break; // Exit the loop when the user enters "EXIT".
         }
 
@@ -132,7 +147,7 @@ int main(int argc, char** argv)
             std::string elm327Response = ReadELM327Response(&hBluetoothSerialPort); // Read response from ELM327.
 
             if (!elm327Response.empty()) {
-                std::cout << elm327Response << std::endl;
+                std::cout << elm327Response << std::endl; 
             }
             else {
                 std::cerr << "No response from ELM327." << std::endl;

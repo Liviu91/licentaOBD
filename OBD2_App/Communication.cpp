@@ -6,12 +6,12 @@ int SendELM327Command(HANDLE* hBluetoothPort, const std::string& command) {
     std::string commandToSend = command + "\r"; // Add carriage return
 
     if (!WriteFile(*hBluetoothPort, commandToSend.c_str(), commandToSend.length(), &bytesWritten, NULL)) {
-        std::cerr << "WriteFile failed: " << GetLastError() << std::endl;
+        std::cerr << "Error writing to the serial port (Code: " << GetLastError() << ")." << std::endl;
         return -1;
     }
-
+     
     if (bytesWritten != commandToSend.length()) {
-        std::cerr << "WriteFile incomplete" << std::endl;
+        std::cerr << "Incomplete data transfer to serial port." << std::endl;
         return -1;
     }
 
@@ -27,8 +27,8 @@ std::string ReadELM327Response(HANDLE* hComPort) {
     do {
         if (!ReadFile(*hComPort, buffer, sizeof(buffer) - 1, &bytesRead, NULL)) {
             if (GetLastError() != ERROR_IO_PENDING) { // Ignore pending if overlapped I/O
-                std::cerr << "ReadFile failed: " << GetLastError() << std::endl;
-                return "";  // indicates error
+                std::cerr << "Serial port read failed (Code: " << GetLastError() << ")." << std::endl;
+                return "";  // Indicates an error
             }
         }
         if (bytesRead > 0) {
@@ -38,6 +38,94 @@ std::string ReadELM327Response(HANDLE* hComPort) {
     } while (bytesRead == sizeof(buffer) - 1); // Continue if buffer filled (unlikely)
 
     PurgeComm(*hComPort, PURGE_RXCLEAR | PURGE_RXABORT);
+    // 1. Remove leading non-alphanumeric characters
+
+    size_t firstAlphaNum = response.find_first_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
+
+    if (firstAlphaNum != std::string::npos) {
+
+        response.erase(0, firstAlphaNum);
+
+    }
+    // Remove trailing carriage returns and '>'
+
+    size_t found = response.find_last_not_of("\r>");
+
+    if (found != std::string::npos) {
+
+        response.erase(found + 1);
+
+    }
+    else {
+
+        // Handle the case where the response is empty or only contains "\r" or ">"
+
+        response = ""; // Or some other appropriate action.
+
+    }
      
     return response;
+}
+
+int InitializeELM327(HANDLE* hBluetoothPort) {
+
+    std::string response;
+
+    std::cout << "...Attempting to initialize ELM327..." << endl; 
+
+    // Send "AT Z" command and display response
+
+    std::cout << "Resetting ELM327 to get the version number... ";
+
+    if (SendELM327Command(hBluetoothPort, "AT Z") != 0) {
+
+        std::cerr << "Command failed!" << endl;
+        return -1;
+
+    }
+
+    response = ReadELM327Response(hBluetoothPort);
+
+    if (!response.empty()) {
+
+        std::cout << "OK" << endl;
+
+        std::cout << "Current version: "<< response <<"" << std::endl;
+
+    }
+
+    else {
+
+        std::cerr << "Command failed! (No response)" << endl;
+
+        return -1;
+
+    }
+
+    // Send "AT E0" command and check the response
+
+    std::cout << "Instruct ELM327 to not echo back the command sent... ";
+
+    if (SendELM327Command(hBluetoothPort, "AT E0") != 0) {
+
+        std::cerr << "Command failed!" << endl;
+
+        return -1;
+
+    }
+
+    response = ReadELM327Response(hBluetoothPort); // Read the response
+
+    if (response.find("OK") == std::string::npos) { // Check for "OK"
+
+        std::cerr << "Echo Off command failed! Response: " << response << endl;
+
+        return -1;
+
+    }
+
+    std::cout << "OK" << endl; 
+
+    return 0;
+
 }

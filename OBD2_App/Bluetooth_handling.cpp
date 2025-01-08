@@ -14,10 +14,10 @@ int IsBluetoothEnabled(void) {
     // Attempt to find a Bluetooth radio.
     btRadioFindHandle = BluetoothFindFirstRadio(&btRadioSearchParams, &radioHandle);
     if (btRadioFindHandle != NULL) {
-        std::cout << "Bluetooth Radio Found !" << std::endl;
+        std::cout << "Bluetooth adapter found!." << std::endl;
         btStatus = 1;
-        if (CloseHandle(radioHandle) == FALSE) {
-            std::cout << "CloseHandle() failed with error code " << GetLastError() << std::endl;
+        if (!CloseHandle(radioHandle)) {
+            std::cerr << "Failed to close Bluetooth handle (Code: " << GetLastError() << ")." << std::endl;
             btStatus = -1;
         } // Close the radio handle.
 
@@ -27,12 +27,11 @@ int IsBluetoothEnabled(void) {
         lastError = GetLastError();
         btStatus = -1;
         if (lastError == ERROR_NO_MORE_ITEMS) {
-            std::cout << "Bluetooth Module not enabled !" << std::endl;
+            std::cerr << "Bluetooth is not enabled !" << std::endl;
             btStatus = 0;
+        } else {
+            std::cerr << "Failed to find Bluetooth adapter (Code: " << lastError << ")." << std::endl;
         }
-        else
-
-            std::cout << "Bluetooth Radio search failed with error code" << lastError << std::endl;
     }
 
     return btStatus;
@@ -66,7 +65,7 @@ bool FindBluetoothDevice(BLUETOOTH_DEVICE_INFO* btDeviceInfo) {
     // Start Bluetooth radio search.
     btRadioFindHandle = BluetoothFindFirstRadio(&btRadioSearchParams, &g_bluetoothRadio);
     if (btRadioFindHandle == NULL) {
-        std::cout << "Bluetooth Radio failed with error code" << GetLastError() << std::endl;
+        std::cerr << "Failed to access Bluetooth adapter (Code: " << GetLastError() << ")." << std::endl;
         searchResult = false;
     }
 
@@ -78,7 +77,7 @@ bool FindBluetoothDevice(BLUETOOTH_DEVICE_INFO* btDeviceInfo) {
     if (btInfoStatus == ERROR_SUCCESS)		std::cout << "Bluetooth Radio looks fine!" << std::endl;
 
     else {
-        std::cout << "BluetoothGetRadioInfo() failed with error code " << btInfoStatus << std::endl;
+        std::cerr << "Failed to get Bluetooth adapter information (Code: " << btInfoStatus << ")." << std::endl;
         searchResult = false;
     }
 
@@ -94,11 +93,12 @@ bool FindBluetoothDevice(BLUETOOTH_DEVICE_INFO* btDeviceInfo) {
     if (btDeviceFindHandle != NULL)
         std::cout << "BluetoothFindFirstDevice() is working!" << std::endl;
     else {
-        std::cout << "Failed to find Devices with error code:  " << GetLastError() << std::endl;
+        std::cerr << "Failed to start Bluetooth device search (Code: " << GetLastError() << ")." << std::endl;
         searchResult = false;
     }
 
-    radioID++;
+    std::cout << "Searching for Bluetooth devices..." << std::endl;
+	radioID++;
     deviceID = 0;
 
     // Loop through discovered Bluetooth devices.
@@ -106,15 +106,15 @@ bool FindBluetoothDevice(BLUETOOTH_DEVICE_INFO* btDeviceInfo) {
     do
     {
         // Print device information (optional).
-        wprintf(L"\n\tDevice %d:\r\n", deviceID);
+        wprintf(L"\n\tBluetooth Device %d:\r\n", deviceID);
         wprintf(L"  \tInstance Name: %s\r\n", deviceInfo.szName);
-        wprintf(L"  \tAddress: %02X:%02X:%02X:%02X:%02X:%02X\r\n", deviceInfo.Address.rgBytes[5],
+        wprintf(L"  \tDevice Address: %02X:%02X:%02X:%02X:%02X:%02X\r\n", deviceInfo.Address.rgBytes[5],
             deviceInfo.Address.rgBytes[4], deviceInfo.Address.rgBytes[3], deviceInfo.Address.rgBytes[2],
             deviceInfo.Address.rgBytes[1], deviceInfo.Address.rgBytes[0]);
-        wprintf(L"  \tClass: 0x%08x\r\n", deviceInfo.ulClassofDevice);
-        wprintf(L"  \tConnected: %s\r\n", deviceInfo.fConnected ? L"true" : L"false");
-        wprintf(L"  \tAuthenticated: %s\r\n", deviceInfo.fAuthenticated ? L"true" : L"false");
-        wprintf(L"  \tRemembered: %s\r\n", deviceInfo.fRemembered ? L"true" : L"false");
+        wprintf(L"  \tDevice Class: 0x%08x\r\n", deviceInfo.ulClassofDevice);
+        wprintf(L"  \tDevice Connection: %s\r\n", deviceInfo.fConnected ? L"true" : L"false");
+        wprintf(L"  \tDevice Authentication: %s\r\n", deviceInfo.fAuthenticated ? L"true" : L"false");
+        wprintf(L"  \tDevice Remembered: %s\r\n", deviceInfo.fRemembered ? L"true" : L"false");
 
         deviceID++;
 
@@ -135,17 +135,17 @@ bool FindBluetoothDevice(BLUETOOTH_DEVICE_INFO* btDeviceInfo) {
     // Close the device search handle.
 
     if (BluetoothFindDeviceClose(btDeviceFindHandle) == TRUE)
-        std::cout << "BluetoothFindDeviceClose(btDeviceFindHandle) is OK!" << std::endl;
+        std::cout << "Device handle closed: Everything is OK!" << std::endl;
     else {
-        std::cout << "BluetoothFindDeviceClose(btDeviceFindHandle) failed with error code " << GetLastError() << std::endl;
+        std::cerr << "Failed to close device handle! (Code: " << GetLastError() << ")." << std::endl;
         searchResult = false;
     }
 
 
     if (BluetoothFindRadioClose(btRadioFindHandle) == TRUE)
-        std::cout << "BluetoothFindRadioClose(btRadioFindHandle) is OK!" << std::endl;
+        std::cout << "Bluetooth radio handle closed!" << std::endl;
     else {
-        std::cout << "BluetoothFindRadioClose(btRadioFindHandle) failed with error code " << GetLastError() << std::endl;
+        std::cerr << "Failed to close bluetooth radio handle! (Code: " << GetLastError() << ")." << std::endl;
         searchResult = false;
     }
     return searchResult;
@@ -165,33 +165,33 @@ bool PairBluetoothDevice(BLUETOOTH_DEVICE_INFO btDeviceInfo) {
     switch (lastError)
     {
     case(ERROR_SUCCESS):
-        std::cout << "Device paired successfully" << std::endl;
+            std::cout << "Device paired." << std::endl;
         pairingResult = true;
         break;
     case(ERROR_CANCELLED):
-        std::cout << "Device pairing failed" << std::endl;
+            std::cerr << "Pairing cancelled." << std::endl;
         pairingResult = false;
         break;
     case(ERROR_INVALID_PARAMETER):
-        std::cout << "Invalid parameters" << std::endl;
+            std::cerr << "Invalid pairing parameters." << std::endl;
         pairingResult = false;
         break;
     case(ERROR_NO_MORE_ITEMS):
-        std::cout << "Device not available" << std::endl;
+            std::cerr << "Device unavailable for pairing." << std::endl;
         pairingResult = false;
         break;
-    }
+        default: // Added a default case for more robust error handling
+            std::cerr << "Pairing error: " << lastError << std::endl;
 
-    if (lastError != ERROR_SUCCESS)
-        std::cout << "Failure due to: " << GetLastError() << std::endl;
+            break;
+    }
     return pairingResult;
 }
 
 // Closes Bluetooth handles and unregisters authentication.
 void CloseBluetoothHandles(void) {
-
-    if (CloseHandle(g_bluetoothRadio) == FALSE) {
-        std::cout << "CloseHandle() failed with error code " << GetLastError() << std::endl;
+    if (!CloseHandle(g_bluetoothRadio)) {
+        std::cerr << "Failed to close Bluetooth radio handle (Code: " << GetLastError() << ")." << std::endl;
     }
     BluetoothUnregisterAuthentication(g_authenticationHandle);
 
