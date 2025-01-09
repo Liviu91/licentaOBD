@@ -47,8 +47,7 @@ bool FindBluetoothDevice(BLUETOOTH_DEVICE_INFO* btDeviceInfo) {
     int deviceID;
     DWORD btInfoStatus;
     bool searchResult = false;
-
-    
+   
     BLUETOOTH_FIND_RADIO_PARAMS btRadioSearchParams = { sizeof(BLUETOOTH_FIND_RADIO_PARAMS) };
     BLUETOOTH_RADIO_INFO btRadioInfo = { sizeof(BLUETOOTH_RADIO_INFO),0, };
     BLUETOOTH_DEVICE_SEARCH_PARAMS deviceSearchParams = {
@@ -86,18 +85,17 @@ bool FindBluetoothDevice(BLUETOOTH_DEVICE_INFO* btDeviceInfo) {
     deviceInfo.dwSize = sizeof(BLUETOOTH_DEVICE_INFO);
 
 
-
     // Start searching for Bluetooth devices for each radio.
     btDeviceFindHandle = BluetoothFindFirstDevice(&deviceSearchParams, &deviceInfo);
 
     if (btDeviceFindHandle != NULL)
-        std::cout << "BluetoothFindFirstDevice() is working!" << std::endl;
+        std::cout << "Bluetooth search possible!" << std::endl;
     else {
         std::cerr << "Failed to start Bluetooth device search (Code: " << GetLastError() << ")." << std::endl;
         searchResult = false;
     }
 
-    std::cout << "Searching for Bluetooth devices..." << std::endl;
+    std::cout << "Start searching for Bluetooth devices..." << std::endl;
 	radioID++;
     deviceID = 0;
 
@@ -118,7 +116,6 @@ bool FindBluetoothDevice(BLUETOOTH_DEVICE_INFO* btDeviceInfo) {
 
         deviceID++;
 
-
         if (wcscmp(deviceInfo.szName, L"OBDII") == 0) // Check if the device is named "OBDII".
         {
             *btDeviceInfo = deviceInfo;
@@ -129,18 +126,15 @@ bool FindBluetoothDevice(BLUETOOTH_DEVICE_INFO* btDeviceInfo) {
             searchResult = false;
         }
 
-
     } while (BluetoothFindNextDevice(btDeviceFindHandle, &deviceInfo));
 
     // Close the device search handle.
-
     if (BluetoothFindDeviceClose(btDeviceFindHandle) == TRUE)
         std::cout << "Device handle closed: Everything is OK!" << std::endl;
     else {
         std::cerr << "Failed to close device handle! (Code: " << GetLastError() << ")." << std::endl;
         searchResult = false;
     }
-
 
     if (BluetoothFindRadioClose(btRadioFindHandle) == TRUE)
         std::cout << "Bluetooth radio handle closed!" << std::endl;
@@ -156,11 +150,10 @@ bool PairBluetoothDevice(BLUETOOTH_DEVICE_INFO btDeviceInfo) {
 
     DWORD lastError;
     bool pairingResult = false;
-
     PWSTR* passkey = new PWSTR[1];
     passkey[0] = PWSTR(L"1234"); // Default passkey (can be changed)
+    
     lastError = BluetoothAuthenticateDevice(NULL, g_bluetoothRadio, &btDeviceInfo, *passkey, 4); // 4 is the length of the passkey
-
 
     switch (lastError)
     {
@@ -194,5 +187,4 @@ void CloseBluetoothHandles(void) {
         std::cerr << "Failed to close Bluetooth radio handle (Code: " << GetLastError() << ")." << std::endl;
     }
     BluetoothUnregisterAuthentication(g_authenticationHandle);
-
 }

@@ -1,6 +1,6 @@
 #include <Communication.h> 
 
-HANDLE m_radio; //Windows handle to local radio, declared here as a global variable
+HANDLE m_radio; //Local bluetooth radio handle
 HANDLE hBluetooth_port_operations;
 HBLUETOOTH_AUTHENTICATION_REGISTRATION hRegHandle = 0;
 
@@ -8,14 +8,11 @@ int main(int argc, char** argv)
 {
     char exitKey;
     DWORD serviceStateResult;
-    //const GUID SerialPortServiceClass_UU=ID = SerialPortServiceClass_UUID;
     bool deviceFoundResult;
     int bluetoothEnabledStatus; // Store Bluetooth status.
     BLUETOOTH_DEVICE_INFO targetBtDeviceInfo = { sizeof(BLUETOOTH_DEVICE_INFO),0, }; // Device information structure.
     HANDLE hBluetoothSerialPort;
     std::string elm327Command;
-
-
 
     bluetoothEnabledStatus = IsBluetoothEnabled(); // Verify if Bluetooth is activated.
 
@@ -100,9 +97,7 @@ int main(int argc, char** argv)
         std::cout << "Device Name: " << targetBtDeviceInfo.szName << std::endl;
 
         wprintf(L"  \tDevice Address: %02X:%02X:%02X:%02X:%02X:%02X\r\n", targetBtDeviceInfo.Address.rgBytes[5],
-
             targetBtDeviceInfo.Address.rgBytes[4], targetBtDeviceInfo.Address.rgBytes[3], targetBtDeviceInfo.Address.rgBytes[2],
-
             targetBtDeviceInfo.Address.rgBytes[1], targetBtDeviceInfo.Address.rgBytes[0]);
         wprintf(L"  \tDevice Connection: %s\r\n", targetBtDeviceInfo.fConnected ? L"true" : L"false");
         wprintf(L"  \tDevice Authentication: %s\r\n", targetBtDeviceInfo.fAuthenticated ? L"true" : L"false");
@@ -110,7 +105,6 @@ int main(int argc, char** argv)
 
         std::cout << "Operation Successful check if comport created" << std::endl;
     }
-
 
     std::cout << "Opening created Bluetooth COM port and setting baudrates" << std::endl;
     
@@ -123,9 +117,9 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    //Initialize ELM327
-    //Send AT E0 command to stop it from echoing back the command send. It should, only, print the actual response
-    //Reset ELM327 with an AT Z command to get the version number
+    /*Initialize ELM327:
+      * Reset ELM327 with an AT Z command to get the version number
+      * Send AT E0 command to stop it from echoing back the command send. It should, only, print the actual response*/
     if (InitializeELM327(&hBluetoothSerialPort) == 0) {
         std::cout << "Init succesfull!" << std::endl;
     }

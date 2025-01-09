@@ -17,6 +17,7 @@ int SetupSerialPort(HANDLE* hBluetoothPort) {
         OPEN_EXISTING,
         0,
         NULL);
+
     if (*hBluetoothPort == INVALID_HANDLE_VALUE)
     {
         if (GetLastError() == ERROR_FILE_NOT_FOUND)
@@ -40,8 +41,6 @@ int SetupSerialPort(HANDLE* hBluetoothPort) {
     serialPortParams.Parity = NOPARITY;
     serialPortParams.StopBits = ONESTOPBIT;
 
-
-
     // Apply the port settings
     if (!SetCommState(*hBluetoothPort, &serialPortParams)) {
         std::cerr << "Baudrates are NOT set: " << GetLastError() << std::endl;
@@ -52,8 +51,7 @@ int SetupSerialPort(HANDLE* hBluetoothPort) {
         std::cout << "BaudrateS Set OK!" << std::endl;
     }
 	
-    // Set timeouts to avoid blocking indefinitely.
-    
+    // Set timeouts to avoid blocking indefinitely.  
     timeouts.ReadIntervalTimeout = MAXDWORD;  // Max time between bytes
     timeouts.ReadTotalTimeoutConstant = timeoutMilliseconds; // Timeout for the entire read operation
     timeouts.ReadTotalTimeoutMultiplier = 0;
