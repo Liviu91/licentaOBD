@@ -5,11 +5,13 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <Bluetooth_operations.h> 
+#include <Serial_port_connection.h>
 #include <Communication.h> 
 
 
 int main(int argc, char** argv) 
 {
+    char exitKey;
     HANDLE hBluetoothSerialPort;
     std::string elm327Command;
     int bluetooth_connection_status = 0;
@@ -17,12 +19,12 @@ int main(int argc, char** argv)
 
     if (!Connect_With_ELM327_via_Bluetooth()) {
         std::cout << "Error setting up bluetooth connection with ELM327 device" << std::endl;
-        std::cout << "Try again..." << std::end;
+        std::cout << "Try again..." << std::endl;
     }
     else // Set up the serial port connection.
         if (!SetupSerialPort(&hBluetoothSerialPort)) {
             // Serial port setup was successful.
-            std::cout << "Try again..." << std::end;
+            std::cout << "Try again..." << std::endl;
         }
         else {
             /*Initialize ELM327:

@@ -23,32 +23,32 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{05e29d94-30d4-4143-b5c3-8dce8dae735d}</ProjectGuid>
     <RootNamespace>OBD2App</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -78,9 +78,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\faculta\licenta\repos\licentaOBD\OBD2_App;$(IncludePath)</IncludePath>
-    <ExecutablePath>D:\faculta\licenta\repos\licentaOBD\OBD2_App;$(ExecutablePath)</ExecutablePath>
-    <SourcePath>D:\faculta\licenta\repos\licentaOBD\OBD2_App;$(SourcePath)</SourcePath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -120,10 +120,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Dear_ImGui\glfw\glfw-master\include;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Dear_ImGui\glad\include;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\SerialPortManager\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\CommunicationManager\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\BluetoothManager\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Dear_ImGui\ImGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Dear_ImGui\glfw_libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;glfw3d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -143,12 +146,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Bluetooth_handling.h" />
-    <ClInclude Include="Communication.h" />
+    <ClInclude Include="Application\Backend\BluetoothManager\inc\Bluetooth_interfaces.h" />
+    <ClInclude Include="Application\Backend\BluetoothManager\inc\Bluetooth_operations.h" />
+    <ClInclude Include="Application\Backend\CommunicationManager\inc\Communication.h" />
+    <ClInclude Include="Application\Backend\SerialPortManager\inc\Serial_port_connection.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="OBD2_App.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="Serial_port_connection.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -159,10 +162,11 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Bluetooth_handling.cpp" />
-    <ClCompile Include="Communication.cpp" />
-    <ClCompile Include="promitator.cpp" />
-    <ClCompile Include="Serial_port_connection.cpp" />
+    <ClCompile Include="Application\Backend\BluetoothManager\src\Bluetooth_interfaces.cpp" />
+    <ClCompile Include="Application\Backend\BluetoothManager\src\Bluetooth_operations.cpp" />
+    <ClCompile Include="Application\Backend\CommunicationManager\src\Communication.cpp" />
+    <ClCompile Include="Application\Backend\SerialPortManager\src\Serial_port_connection.cpp" />
+    <ClCompile Include="Application\main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -62,25 +62,25 @@ int InitializeELM327(HANDLE* hBluetoothPort) {
 
     std::string response;
 
-    std::cout << "...Attempting to initialize ELM327..." << endl; 
+    std::cout << "...Attempting to initialize ELM327..." << std::endl; 
 
     // Send "AT Z" command and display response
     std::cout << "Resetting ELM327 to get the version number... ";
 
     if (SendELM327Command(hBluetoothPort, "AT Z") != 0) {
-        std::cerr << "Command failed!" << endl;
+        std::cerr << "Command failed!" << std::endl;
         return -1;
     }
 
     response = ReadELM327Response(hBluetoothPort);
 
     if (!response.empty()) {
-        std::cout << "OK" << endl;
+        std::cout << "OK" << std::endl;
         std::cout << "Current version: "<< response <<"" << std::endl;
     }
 
     else {
-        std::cerr << "Command failed! (No response)" << endl;
+        std::cerr << "Command failed! (No response)" << std::endl;
         return -1;
     }
 
@@ -88,18 +88,18 @@ int InitializeELM327(HANDLE* hBluetoothPort) {
     std::cout << "Instruct ELM327 to not echo back the command sent... ";
 
     if (SendELM327Command(hBluetoothPort, "AT E0") != 0) {
-        std::cerr << "Command failed!" << endl;
+        std::cerr << "Command failed!" << std::endl;
         return -1;
     }
 
     response = ReadELM327Response(hBluetoothPort); // Read the response
 
     if (response.find("OK") == std::string::npos) { // Check for "OK"
-        std::cerr << "Echo Off command failed! Response: " << response << endl;
+        std::cerr << "Echo Off command failed! Response: " << response << std::endl;
         return -1;
     }
 
-    std::cout << "OK" << endl; 
+    std::cout << "OK" << std::endl;
 
     return 0;
 
