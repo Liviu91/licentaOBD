@@ -171,6 +171,7 @@
     <ClCompile Include="Application\Backend\SerialPortManager\src\Serial_port_connection.cpp" />
     <ClCompile Include="Application\Frontend\MainWindow\src\MainWindow.cpp" />
     <ClCompile Include="Application\main.cpp" />
+    <ClCompile Include="Dear_ImGui\glad\src\glad.c" />
     <ClCompile Include="Dear_ImGui\ImGui\source\imgui.cpp" />
     <ClCompile Include="Dear_ImGui\ImGui\source\imgui_draw.cpp" />
     <ClCompile Include="Dear_ImGui\ImGui\source\imgui_impl_glfw.cpp" />

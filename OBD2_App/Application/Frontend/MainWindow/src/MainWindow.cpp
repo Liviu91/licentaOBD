@@ -8,6 +8,7 @@
 #include <imgui.h> // For ImGui functions and types
 
 
+
 MainWindow::MainWindow() : isConnected(false), window(nullptr) // Initialize window to nullptr
 {
 
@@ -24,118 +25,112 @@ void MainWindow::Initialize(GLFWwindow* window)
     this->window = window;
 }
 
+
+bool MainWindow::LoadFonts()
+{
+
+
+    ImGuiIO& io = ImGui::GetIO();
+    defaultFont = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\times.ttf", 14.0f); //Change path if needed
+    titleFont = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\times.ttf", 18.0f); //Change path if needed
+
+
+
+    if (defaultFont == nullptr || titleFont == nullptr)
+    {
+        return false; //Return false on font load fail. The app should handle it.
+
+    }
+
+    return true; //Fonts are loaded correctly
+}
+
 void MainWindow::Draw()
 {
-    /* test imgui*/
-    ImGui::Begin("Test Window");
-    ImGui::Text("Hello, ImGui!");
+    
+    ImGui::Begin("OBD-II Diagnosis Application");
+    ImGui::SetWindowPos(ImVec2(0, 0));
+    ImGui::SetWindowSize(ImVec2(1280, 720));
+
+
+    // Title (Times New Roman, 18pt)
+    ImGui::PushFont(titleFont); // Assuming you've loaded the title font
+    ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("OBD-II Diagnosis Application").x) * 0.5f); // Centered
+    ImGui::Text("OBD-II Diagnosis Application");
+    ImGui::PopFont();
+
+
+
+    ImGui::PushFont(defaultFont); // Assuming you've loaded the default font for rest of elements
+    // Message Area (Left side)
+    ImGui::BeginGroup();
+    ImGui::Text("ELM327 version: %s", elm327Version.c_str());
+    ImGui::Text("ECU id: %s", ecuId.c_str());
+    ImGui::Text("VIN: %s", vinNumber.c_str());
+    ImGui::EndGroup();
+
+
+    // Buttons (Right side)
+    ImGui::SameLine(ImGui::GetWindowWidth() / 2); //Calculate offset to the center and split it in 2 in order to have equal spacing
+    ImGui::BeginGroup();
+
+
+
+    if (isConnected) {
+        if (ImGui::Button("RealTime Data")) {
+            // Handle RealTimeData button click
+        }
+        if (ImGui::Button("DTC")) {
+            // Handle DTC button click
+        }
+
+    }
+    else
+    {
+        ImGui::BeginDisabled();
+        ImGui::Button("RealTime Data");
+        ImGui::Button("DTC");
+        ImGui::EndDisabled();
+
+
+    }
+    if (isConnected) {
+
+        if (ImGui::Button("Communicate with Elm327")) {
+            // Handle Communicate button click
+        }
+        if (ImGui::Button("Data logging")) {
+            // Handle Data logging button click
+        }
+
+    }
+    else
+    {
+
+        ImGui::BeginDisabled();
+        ImGui::Button("Communicate with Elm327");
+        ImGui::Button("Data logging");
+        ImGui::EndDisabled();
+
+    }
+
+
+
+    ImGui::EndGroup();
+
+
+    // Connect Button (Center-bottom)
+    ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 60); // Position from the bottom. You can adjust value
+
+    ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("Connect").x) * 0.5f - 75 / 2); // Centered. Calculate offset. Divide button width (75) in 2 for perfect centering
+    if (ImGui::Button("Connect", ImVec2(150, 50))) {
+        // ... your connection logic (as before) ...
+    }
+
+    // ... rest of your UI elements for messages etc.
+
+    ImGui::PopFont();
     ImGui::End();
-
-    //ImGui::Begin("OBD-II Diagnosis Application", nullptr, ImGuiWindowFlags_NoCollapse); //No collapse added
-    //ImGui::SetWindowPos(ImVec2(0, 0));//Set the main window in the upper left corner
-    //ImGui::SetWindowSize(ImVec2(1280, 720));//Set the main window size
-
-    //ImGui::Text("OBD-II Diagnosis Application");
-
-
-
-
-    //ImGui::BeginGroup(); // Group for labels on the left
-
-
-    //ImGui::Text("ELM327 version: %s", elm327Version.c_str());
-
-    //ImGui::Text("ECU id: %s", ecuId.c_str());
-
-    //ImGui::Text("VIN: %s", vinNumber.c_str());
-
-    //ImGui::EndGroup();
-
-
-
-
-    //ImGui::SameLine(ImGui::GetWindowWidth() / 2); //Start from the middle
-
-
-    //ImGui::BeginGroup();// Group for the buttons on the right
-
-    //if (isConnected)
-    //{
-
-
-
-    //    if (ImGui::Button("RealTime Data"))
-    //    {
-
-    //        //Implement show realtime data window
-    //    }
-
-
-
-
-
-    //    if (ImGui::Button("DTC"))
-    //    {
-
-
-    //        //Implement show dtc data window
-    //    }
-
-    //}
-    //else
-    //{
-    //    ImGui::BeginDisabled();
-
-    //    ImGui::Button("RealTime Data");
-
-
-
-
-    //    ImGui::Button("DTC");
-    //    ImGui::EndDisabled();
-
-    //}
-
-
-
-
-
-
-
-    //if (isConnected) {
-    //    if (ImGui::Button("Communicate with Elm327")) {
-    //        // Implement show communication window
-
-
-    //    }
-
-
-    //    if (ImGui::Button("Data logging")) {
-    //        // Implement show data logging window
-
-    //    }
-    //}
-    //else
-    //{
-
-    //    ImGui::BeginDisabled();
-
-    //    ImGui::Button("Communicate with Elm327");
-
-
-
-    //    ImGui::Button("Data logging");
-
-    //    ImGui::EndDisabled();
-
-
-    //}
-
-    //ImGui::EndGroup();
-
-
-
-
 
 
     //if (ImGui::Button("Connect", ImVec2(150, 50)))
@@ -300,10 +295,10 @@ void MainWindow::Draw()
 
 
 
-    //ImGui::Text("%s", connectionMessage.c_str()); //Display messages regarding the connection
+    ImGui::Text("%s", connectionMessage.c_str()); //Display messages regarding the connection
 
 
 
-    //ImGui::End();
+    ImGui::End();
 
 }

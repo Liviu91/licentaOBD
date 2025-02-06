@@ -15,6 +15,8 @@ public:
 
     void Draw();
 
+    bool LoadFonts();
+
 private:
 
 
@@ -27,6 +29,8 @@ private:
     std::string connectionMessage;
 
     GLFWwindow* window;
+    ImFont* defaultFont;  // Declare defaultFont as a member
+    ImFont* titleFont; //Declare titleFont as a member
 
 
 
