@@ -107,8 +107,8 @@ int main(int argc, char** argv)
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 
-
     MainWindow mainWindow;  // Create MainWindow instance
+    mainWindow.Initialize(window); //Initialize main window
     if (!mainWindow.LoadFonts()) // Load fonts and check for errors
     {
         std::cerr << "Error loading fonts. Exiting application." << std::endl;
@@ -123,10 +123,11 @@ int main(int argc, char** argv)
 
         glfwDestroyWindow(window);
         glfwTerminate();
+        exitKey = _getch();
         return 1; // Return an error code to indicate failure
 
     }
-    mainWindow.Initialize(window); //Initialize main window
+    
 
 
     while (!glfwWindowShouldClose(window))

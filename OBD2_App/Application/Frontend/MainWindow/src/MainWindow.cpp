@@ -31,8 +31,8 @@ bool MainWindow::LoadFonts()
 
 
     ImGuiIO& io = ImGui::GetIO();
-    defaultFont = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\times.ttf", 14.0f); //Change path if needed
-    titleFont = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\times.ttf", 18.0f); //Change path if needed
+   defaultFont = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\times.ttf", 22.0f); //Change path if needed
+   titleFont = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\times.ttf", 30.0f); //Change path if needed
 
 
 
@@ -48,7 +48,7 @@ bool MainWindow::LoadFonts()
 void MainWindow::Draw()
 {
     
-    ImGui::Begin("OBD-II Diagnosis Application");
+    ImGui::Begin("MainWindow");
     ImGui::SetWindowPos(ImVec2(0, 0));
     ImGui::SetWindowSize(ImVec2(1280, 720));
 
@@ -83,19 +83,6 @@ void MainWindow::Draw()
         if (ImGui::Button("DTC")) {
             // Handle DTC button click
         }
-
-    }
-    else
-    {
-        ImGui::BeginDisabled();
-        ImGui::Button("RealTime Data");
-        ImGui::Button("DTC");
-        ImGui::EndDisabled();
-
-
-    }
-    if (isConnected) {
-
         if (ImGui::Button("Communicate with Elm327")) {
             // Handle Communicate button click
         }
@@ -106,15 +93,16 @@ void MainWindow::Draw()
     }
     else
     {
-
         ImGui::BeginDisabled();
+        ImGui::Button("RealTime Data");
+        ImGui::Button("DTC");
         ImGui::Button("Communicate with Elm327");
         ImGui::Button("Data logging");
         ImGui::EndDisabled();
 
+
     }
-
-
+   
 
     ImGui::EndGroup();
 
@@ -130,7 +118,6 @@ void MainWindow::Draw()
     // ... rest of your UI elements for messages etc.
 
     ImGui::PopFont();
-    ImGui::End();
 
 
     //if (ImGui::Button("Connect", ImVec2(150, 50)))
