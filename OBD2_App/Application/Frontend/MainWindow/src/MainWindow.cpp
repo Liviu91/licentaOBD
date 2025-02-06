@@ -26,108 +26,112 @@ void MainWindow::Initialize(GLFWwindow* window)
 
 void MainWindow::Draw()
 {
+    /* test imgui*/
+    ImGui::Begin("Test Window");
+    ImGui::Text("Hello, ImGui!");
+    ImGui::End();
 
-    ImGui::Begin("OBD-II Diagnosis Application", nullptr, ImGuiWindowFlags_NoCollapse); //No collapse added
-    ImGui::SetWindowPos(ImVec2(0, 0));//Set the main window in the upper left corner
-    ImGui::SetWindowSize(ImVec2(1280, 720));//Set the main window size
+    //ImGui::Begin("OBD-II Diagnosis Application", nullptr, ImGuiWindowFlags_NoCollapse); //No collapse added
+    //ImGui::SetWindowPos(ImVec2(0, 0));//Set the main window in the upper left corner
+    //ImGui::SetWindowSize(ImVec2(1280, 720));//Set the main window size
 
-    ImGui::Text("OBD-II Diagnosis Application");
-
-
-
-
-    ImGui::BeginGroup(); // Group for labels on the left
-
-
-    ImGui::Text("ELM327 version: %s", elm327Version.c_str());
-
-    ImGui::Text("ECU id: %s", ecuId.c_str());
-
-    ImGui::Text("VIN: %s", vinNumber.c_str());
-
-    ImGui::EndGroup();
+    //ImGui::Text("OBD-II Diagnosis Application");
 
 
 
 
-    ImGui::SameLine(ImGui::GetWindowWidth() / 2); //Start from the middle
+    //ImGui::BeginGroup(); // Group for labels on the left
 
 
-    ImGui::BeginGroup();// Group for the buttons on the right
+    //ImGui::Text("ELM327 version: %s", elm327Version.c_str());
 
-    if (isConnected)
-    {
+    //ImGui::Text("ECU id: %s", ecuId.c_str());
 
+    //ImGui::Text("VIN: %s", vinNumber.c_str());
 
-
-        if (ImGui::Button("RealTime Data"))
-        {
-
-            //Implement show realtime data window
-        }
+    //ImGui::EndGroup();
 
 
 
 
-
-        if (ImGui::Button("DTC"))
-        {
+    //ImGui::SameLine(ImGui::GetWindowWidth() / 2); //Start from the middle
 
 
-            //Implement show dtc data window
-        }
+    //ImGui::BeginGroup();// Group for the buttons on the right
 
-    }
-    else
-    {
-        ImGui::BeginDisabled();
-
-        ImGui::Button("RealTime Data");
+    //if (isConnected)
+    //{
 
 
 
+    //    if (ImGui::Button("RealTime Data"))
+    //    {
 
-        ImGui::Button("DTC");
-        ImGui::EndDisabled();
-
-    }
+    //        //Implement show realtime data window
+    //    }
 
 
 
 
 
+    //    if (ImGui::Button("DTC"))
+    //    {
 
 
-    if (isConnected) {
-        if (ImGui::Button("Communicate with Elm327")) {
-            // Implement show communication window
+    //        //Implement show dtc data window
+    //    }
 
+    //}
+    //else
+    //{
+    //    ImGui::BeginDisabled();
 
-        }
-
-
-        if (ImGui::Button("Data logging")) {
-            // Implement show data logging window
-
-        }
-    }
-    else
-    {
-
-        ImGui::BeginDisabled();
-
-        ImGui::Button("Communicate with Elm327");
+    //    ImGui::Button("RealTime Data");
 
 
 
-        ImGui::Button("Data logging");
 
-        ImGui::EndDisabled();
+    //    ImGui::Button("DTC");
+    //    ImGui::EndDisabled();
+
+    //}
 
 
-    }
 
-    ImGui::EndGroup();
+
+
+
+
+    //if (isConnected) {
+    //    if (ImGui::Button("Communicate with Elm327")) {
+    //        // Implement show communication window
+
+
+    //    }
+
+
+    //    if (ImGui::Button("Data logging")) {
+    //        // Implement show data logging window
+
+    //    }
+    //}
+    //else
+    //{
+
+    //    ImGui::BeginDisabled();
+
+    //    ImGui::Button("Communicate with Elm327");
+
+
+
+    //    ImGui::Button("Data logging");
+
+    //    ImGui::EndDisabled();
+
+
+    //}
+
+    //ImGui::EndGroup();
 
 
 
@@ -296,10 +300,10 @@ void MainWindow::Draw()
 
 
 
-    ImGui::Text("%s", connectionMessage.c_str()); //Display messages regarding the connection
+    //ImGui::Text("%s", connectionMessage.c_str()); //Display messages regarding the connection
 
 
 
-    ImGui::End();
+    //ImGui::End();
 
 }
