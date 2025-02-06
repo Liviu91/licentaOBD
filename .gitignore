@@ -1,0 +1,32 @@
+# Ignore Visual Studio temporary files
+.vs/
+
+# Ignore x64 build output directories (adjust if your build directory is named differently)
+OBD2_App/x64/
+x64/
+
+# Ignore CMake temporary files and build output if you choose in-source builds
+# (Consider placing your build outside the source tree as I recommended earlier)
+# CMakeFiles/
+# build/  # Or your custom build folder inside the project - remove this if build folder is placed outside.
+
+# Ignore other common Visual Studio files (optional)
+*.sdf
+*.opensdf
+ipch/
+
+# Ignore user-specific Visual Studio settings
+*.user
+*.suo
+
+# Ignore binaries
+*.exe
+*.dll
+*.lib
+*.obj
+*.pdb
+*.ilk
+*.idb
+*.exp
+*.bsc
+
