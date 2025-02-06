@@ -70,54 +70,106 @@ void MainWindow::Draw()
     ImGui::EndGroup();
 
 
-    // Buttons (Right side)
-    ImGui::SameLine(ImGui::GetWindowWidth() / 2); //Calculate offset to the center and split it in 2 in order to have equal spacing
-    ImGui::BeginGroup();
+    ImGui::PopFont();
+
+    // Button Positioning
+    float buttonWidth = 150.0f;  // Adjust as needed
+    float buttonHeight = 30.0f; // Adjust as needed
+    float windowWidth = ImGui::GetWindowWidth();
+    float windowHeight = ImGui::GetWindowHeight();
+    float verticalStart = windowHeight * (2.0f / 3.0f) - buttonHeight / 2; //Start at 2/3 for each side. Center button vertically by /2 its height
 
 
 
+
+    // Left-side buttons
+    ImGui::SetCursorScreenPos(ImVec2(10, verticalStart));   // Small margin from left. Set start position
     if (isConnected) {
-        if (ImGui::Button("RealTime Data")) {
+        if (ImGui::Button("RealTime Data", ImVec2(buttonWidth, buttonHeight))) {
             // Handle RealTimeData button click
         }
-        if (ImGui::Button("DTC")) {
+    }
+    else
+    {
+        ImGui::BeginDisabled();
+        ImGui::Button("RealTime Data", ImVec2(buttonWidth, buttonHeight));
+        ImGui::EndDisabled();
+
+
+    }
+    ImGui::SetCursorScreenPos(ImVec2(10, verticalStart + buttonHeight + 10)); // Place DTC button below RealTimeData with some spacing
+    if (isConnected) {
+        if (ImGui::Button("DTC", ImVec2(buttonWidth, buttonHeight))) {
             // Handle DTC button click
         }
-        if (ImGui::Button("Communicate with Elm327")) {
+    }
+    else {
+        ImGui::BeginDisabled();
+        ImGui::Button("DTC", ImVec2(buttonWidth, buttonHeight));
+        ImGui::EndDisabled();
+    }
+
+
+
+
+
+
+
+    // Right-side buttons
+    ImGui::SetCursorScreenPos(ImVec2(windowWidth - buttonWidth - 10, verticalStart));  // Small margin from right
+    if (isConnected) {
+
+        if (ImGui::Button("Communicate with Elm327", ImVec2(buttonWidth, buttonHeight))) {
             // Handle Communicate button click
-        }
-        if (ImGui::Button("Data logging")) {
-            // Handle Data logging button click
         }
 
     }
     else
     {
         ImGui::BeginDisabled();
-        ImGui::Button("RealTime Data");
-        ImGui::Button("DTC");
-        ImGui::Button("Communicate with Elm327");
-        ImGui::Button("Data logging");
+        ImGui::Button("Communicate with Elm327", ImVec2(buttonWidth, buttonHeight));
+
         ImGui::EndDisabled();
 
+    }
+
+    ImGui::SetCursorScreenPos(ImVec2(windowWidth - buttonWidth - 10, verticalStart + buttonHeight + 10)); //Spacing for data logging button
+
+
+    if (isConnected)
+    {
+
+        if (ImGui::Button("Data logging", ImVec2(buttonWidth, buttonHeight))) {
+
+        }
 
     }
-   
+    else
+    {
 
-    ImGui::EndGroup();
+        ImGui::BeginDisabled();
+        ImGui::Button("Data logging", ImVec2(buttonWidth, buttonHeight));
+
+        ImGui::EndDisabled();
+
+    }
+
+
+
 
 
     // Connect Button (Center-bottom)
-    ImGui::SetCursorPosY(ImGui::GetWindowHeight() - 60); // Position from the bottom. You can adjust value
+    ImGui::SetCursorPosY(windowHeight - 60);
 
-    ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("Connect").x) * 0.5f - 75 / 2); // Centered. Calculate offset. Divide button width (75) in 2 for perfect centering
+
+    ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("Connect").x) * 0.5f - 150 / 2);  // Center connect button
+
+
     if (ImGui::Button("Connect", ImVec2(150, 50))) {
-        // ... your connection logic (as before) ...
+        // ... (your connection logic)
     }
 
-    // ... rest of your UI elements for messages etc.
 
-    ImGui::PopFont();
 
 
     //if (ImGui::Button("Connect", ImVec2(150, 50)))
