@@ -16,7 +16,7 @@ int Connect_With_ELM327_via_Bluetooth() {
         std::cout << "Bluetooth is disabled. Enable it and restart the application." << std::endl;
         std::cout << "Press any key to exit" << std::endl;
         exitKey = _getch();
-        return 0;
+        return -1;
     }
     else if (bluetoothEnabledStatus == -1) {
         std::cerr << "Error initializing Bluetooth. Exiting." << std::endl;
@@ -36,7 +36,7 @@ int Connect_With_ELM327_via_Bluetooth() {
             Sleep(1000);
             if (_getch()) { // Exit if any key is pressed.
                 CloseBluetoothHandles();
-                return 0;
+                return -1;
             }
         }
     }
@@ -66,7 +66,7 @@ int Connect_With_ELM327_via_Bluetooth() {
             if (!PairBluetoothDevice(targetBtDeviceInfo)) { // Pair with the device.
                 std::cerr << "Pairing failed. Try again" << std::endl;
                 CloseBluetoothHandles();
-                return 0;
+                return -1;
             }
         }
 
@@ -85,7 +85,7 @@ int Connect_With_ELM327_via_Bluetooth() {
             std::cout << "Press any key to exit" << std::endl;
             CloseBluetoothHandles();
             exitKey = _getch();
-            return 0;
+            return -1;
         }
 
         BluetoothGetDeviceInfo(g_bluetoothRadio, &targetBtDeviceInfo); // Update device information.
@@ -103,5 +103,8 @@ int Connect_With_ELM327_via_Bluetooth() {
         wprintf(L"  \tDevice Remembered: %s\r\n", targetBtDeviceInfo.fRemembered ? L"true" : L"false");
 
         std::cout << "Operation Successful check if comport created" << std::endl;
+
+        return 0;
+
     }
 }

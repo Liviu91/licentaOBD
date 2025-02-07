@@ -4,10 +4,10 @@
 #include <imgui_impl_opengl3.h>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <Bluetooth_operations.h> 
 #include <Serial_port_connection.h>
 #include <Communication.h> 
 #include <MainWindow.hpp>
+#include <Bluetooth_operations.h> 
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -16,31 +16,10 @@ static void glfw_error_callback(int error, const char* description)
 int main(int argc, char** argv) 
 {
     char exitKey;
-    HANDLE hBluetoothSerialPort;
+    
     std::string elm327Command;
     int bluetooth_connection_status = 0;
     int serial_port_setup_status = 0;
-
-    //if (!Connect_With_ELM327_via_Bluetooth()) {
-    //    std::cout << "Error setting up bluetooth connection with ELM327 device" << std::endl;
-    //    std::cout << "Try again..." << std::endl;
-    //}
-    //else // Set up the serial port connection.
-    //    if (!SetupSerialPort(&hBluetoothSerialPort)) {
-    //        // Serial port setup was successful.
-    //        std::cout << "Try again..." << std::endl;
-    //    }
-    //    else {
-    //        /*Initialize ELM327:
-    //         * version, vin, ecu id, at e0? maybe more info to showcase at the beggining of the mainWindow*/
-    //        if (!InitializeELM327(&hBluetoothSerialPort)) {
-    //            std::cout << "Init succesfull!" << std::endl;
-    //        }
-    //        else {
-    //            std::cerr << "Init failed!" << std::endl;
-    //            return -1;
-    //        }
-    //    }
 
    
     //// Main command loop.
@@ -162,7 +141,7 @@ int main(int argc, char** argv)
     glfwDestroyWindow(window);
     glfwTerminate();
 
-    cout << "\nPress any key to exit" << endl; 
+    std::cout << "\nPress any key to exit" << std::endl;
 
     CloseBluetoothHandles();
     exitKey = _getch();

@@ -7,12 +7,12 @@ int SendELM327Command(HANDLE* hBluetoothPort, const std::string& command) {
 
     if (!WriteFile(*hBluetoothPort, commandToSend.c_str(), commandToSend.length(), &bytesWritten, NULL)) {
         std::cerr << "Error writing to the serial port (Code: " << GetLastError() << ")." << std::endl;
-        return -1;
+        return 1;
     }
      
     if (bytesWritten != commandToSend.length()) {
         std::cerr << "Incomplete data transfer to serial port." << std::endl;
-        return -1;
+        return 1;
     }
 
     return 0; // Success
@@ -69,7 +69,7 @@ int InitializeELM327(HANDLE* hBluetoothPort) {
 
     if (SendELM327Command(hBluetoothPort, "AT Z") != 0) {
         std::cerr << "Command failed!" << std::endl;
-        return -1;
+        return 1;
     }
 
     response = ReadELM327Response(hBluetoothPort);
@@ -81,7 +81,7 @@ int InitializeELM327(HANDLE* hBluetoothPort) {
 
     else {
         std::cerr << "Command failed! (No response)" << std::endl;
-        return -1;
+        return 1;
     }
 
     // Send "AT E0" command and check the response
@@ -89,14 +89,14 @@ int InitializeELM327(HANDLE* hBluetoothPort) {
 
     if (SendELM327Command(hBluetoothPort, "AT E0") != 0) {
         std::cerr << "Command failed!" << std::endl;
-        return -1;
+        return 1;
     }
 
     response = ReadELM327Response(hBluetoothPort); // Read the response
 
     if (response.find("OK") == std::string::npos) { // Check for "OK"
         std::cerr << "Echo Off command failed! Response: " << response << std::endl;
-        return -1;
+        return 1;
     }
 
     std::cout << "OK" << std::endl;

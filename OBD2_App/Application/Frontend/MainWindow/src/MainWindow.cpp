@@ -15,6 +15,7 @@ MainWindow::MainWindow() : isConnected(false), window(nullptr) // Initialize win
     elm327Version = "";
     ecuId = "";
     vinNumber = "";
+    hBluetoothSerialPort = NULL ;
 
 
 }
@@ -78,8 +79,6 @@ void MainWindow::Draw()
     float windowWidth = ImGui::GetWindowWidth();
     float windowHeight = ImGui::GetWindowHeight();
     float verticalStart = windowHeight * (2.0f / 3.0f) - buttonHeight / 2; //Start at 2/3 for each side. Center button vertically by /2 its height
-
-
 
 
     // Left-side buttons
@@ -166,7 +165,26 @@ void MainWindow::Draw()
 
 
     if (ImGui::Button("Connect", ImVec2(150, 50))) {
-        // ... (your connection logic)
+
+        if (Connect_With_ELM327_via_Bluetooth()) {
+        std::cout << "Error setting up bluetooth connection with ELM327 device" << std::endl;
+        std::cout << "Try again..." << std::endl;
+    }
+        else // Set up the serial port connection.
+            if (SetupSerialPort(&hBluetoothSerialPort)) {
+            // Serial port setup was not successful.
+            std::cout << "Try again..." << std::endl;
+          }
+         else {
+            /*Initialize ELM327:
+             * version, vin, ecu id, at e0? maybe more info to showcase at the beggining of the mainWindow*/
+            if (InitializeELM327(&hBluetoothSerialPort)) {
+                std::cout << "Init failed!" << std::endl;
+            }
+            else {
+                std::cerr << "Init succesfull!" << std::endl;
+            }
+        }
     }
 
 
