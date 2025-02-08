@@ -20,7 +20,7 @@ public:
 private:
 
 
-    bool isConnected;
+  //  bool isConnected;
 
     std::string elm327Version; //Make sure it's std::string
     std::string ecuId;

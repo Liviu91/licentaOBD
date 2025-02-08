@@ -4,12 +4,12 @@
 #include <Bluetooth_operations.h>
 #include <Serial_port_connection.h>
 #include <Communication_interfaces.h>
-
+#include <PressConnect.h>
 #include <imgui.h> // For ImGui functions and types
 
 
 
-MainWindow::MainWindow() : isConnected(false), window(nullptr) // Initialize window to nullptr
+MainWindow::MainWindow() : window(nullptr) // Initialize window to nullptr
 {
 
     elm327Version = "";
@@ -45,10 +45,13 @@ bool MainWindow::LoadFonts()
     return true; //Fonts are loaded correctly
 }
 
+
+//PressConnect::isConnected(false);
+
 void MainWindow::Draw()
 {
-    HANDLE hBluetoothSerialPort = NULL;
-
+   
+    static bool pressedConnect = false;
     ImGui::Begin("MainWindow");
     ImGui::SetWindowPos(ImVec2(0, 0));
     ImGui::SetWindowSize(ImVec2(1280, 720));
@@ -154,9 +157,6 @@ void MainWindow::Draw()
     }
 
 
-
-
-
     // Connect Button (Center-bottom)
     ImGui::SetCursorPosY(windowHeight - 60);
 
@@ -164,27 +164,45 @@ void MainWindow::Draw()
     ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("Connect").x) * 0.5f - 150 / 2);  // Center connect button
 
 
-    if (ImGui::Button("Connect", ImVec2(150, 50))) {
+    if (isConnected)
+    {
 
-        if (Connect_With_ELM327_via_Bluetooth()) {
-        std::cout << "Error setting up bluetooth connection with ELM327 device" << std::endl;
-        std::cout << "Try again..." << std::endl;
+        ImGui::BeginDisabled(); // Disable if already connected
+        ImGui::Button("Connect", ImVec2(150, 50));
+        ImGui::EndDisabled();
+
+
     }
-        else // Set up the serial port connection.
-            if (SetupSerialPort(&hBluetoothSerialPort)) {
-            // Serial port setup was not successful.
-            std::cout << "Try again..." << std::endl;
-          }
-         else {
-            /*Initialize ELM327:
-             * version, vin, ecu id, at e0? maybe more info to showcase at the beggining of the mainWindow*/
-            if (InitializeELM327(&hBluetoothSerialPort)) {
-                std::cout << "Init failed!" << std::endl;
-            }
-            else {
-                std::cerr << "Init succesfull!" << std::endl;
-            }
+    else if (ImGui::Button("Connect", ImVec2(150, 50)) && !pressedConnect) //Only allow one click if not connected
+    {
+
+
+        pressedConnect = true; // Disable the button
+
+
+
+        pressConnect.reset(new PressConnect());
+
+        if (pressConnect->Connect()) {
+            isConnected = true;
+
+
+            elm327Version = pressConnect->GetElm327Version();
+            ecuId = pressConnect->GetEcuId();
+            vinNumber = pressConnect->GetVinNumber();
         }
+        else
+        {
+            connectionMessage = pressConnect->GetLastErrorMessage();
+        }
+
+    }
+    else if (!isConnected)
+    {
+
+        ImGui::BeginDisabled();
+        ImGui::Button("Connect", ImVec2(150, 50));
+        ImGui::EndDisabled();
     }
 
 
