@@ -188,13 +188,13 @@ void MainWindow::Draw()
             isConnected = true;
 
 
-            elm327Version = pressConnect->GetElm327Version();
-            ecuId = pressConnect->GetEcuId();
-            vinNumber = pressConnect->GetVinNumber();
+            //elm327Version = pressConnect->GetElm327Version();
+            //ecuId = pressConnect->GetEcuId();
+            //vinNumber = pressConnect->GetVinNumber();
         }
         else
         {
-            connectionMessage = pressConnect->GetLastErrorMessage();
+            //connectionMessage = pressConnect->GetLastErrorMessage();
         }
 
     }

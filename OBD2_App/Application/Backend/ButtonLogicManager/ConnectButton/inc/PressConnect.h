@@ -30,10 +30,10 @@ public:
     bool connectionOK;
     HANDLE hBluetoothSerialPort;
     // Getters to access data from MainWindow
-    const std::string& GetLastErrorMessage() const;
+ /*   const std::string& GetLastErrorMessage() const;
     const std::string& GetElm327Version() const;
     const std::string& GetEcuId() const;
-    const std::string& GetVinNumber() const;
+    const std::string& GetVinNumber() const;*/
 
 private:
 
