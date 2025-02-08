@@ -26,7 +26,7 @@ private:
     std::string ecuId;
     std::string vinNumber;
     std::string connectionMessage;
-
+    bool isConnected;
     GLFWwindow* window;
     ImFont* defaultFont;  // Declare defaultFont as a member
     ImFont* titleFont; //Declare titleFont as a member

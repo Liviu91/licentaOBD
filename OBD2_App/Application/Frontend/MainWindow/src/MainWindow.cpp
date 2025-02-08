@@ -9,9 +9,9 @@
 
 
 
-MainWindow::MainWindow() : window(nullptr) // Initialize window to nullptr
+MainWindow::MainWindow() : window(nullptr)// Initialize window to nullptr
 {
-
+    isConnected = false;
     elm327Version = "";
     ecuId = "";
     vinNumber = "";
@@ -50,8 +50,9 @@ bool MainWindow::LoadFonts()
 
 void MainWindow::Draw()
 {
-   
-    static bool pressedConnect = false;
+    //PressConnect pressConnect = false;
+    bool pressConnectOneTime = false;
+    PressConnect pressConnect;
     ImGui::Begin("MainWindow");
     ImGui::SetWindowPos(ImVec2(0, 0));
     ImGui::SetWindowSize(ImVec2(1280, 720));
@@ -173,11 +174,11 @@ void MainWindow::Draw()
 
 
     }
-    else if (ImGui::Button("Connect", ImVec2(150, 50)) && !pressedConnect) //Only allow one click if not connected
+    else if (ImGui::Button("Connect", ImVec2(150, 50)) && !pressConnectOneTime) //Only allow one click if not connected
     {
 
 
-        pressedConnect = true; // Disable the button
+        pressConnectOneTime = true; // Disable the button
 
 
 
