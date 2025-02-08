@@ -1,4 +1,4 @@
-#include <Communication.h>
+#include <Communication_interfaces.h>
 
 // Send a command to the ELM327 device.
 int SendELM327Command(HANDLE* hBluetoothPort, const std::string& command) {

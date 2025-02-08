@@ -24,16 +24,16 @@
     <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Bluetooth_handling.h">
+    <ClInclude Include="Application\Frontend\MainWindow\inc\MainWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Communication.h">
+    <ClInclude Include="Dear_ImGui\ImGui\include\imconfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OBD2_App.h">
+    <ClInclude Include="Dear_ImGui\ImGui\include\imgui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Serial_port_connection.h">
+    <ClInclude Include="Application\Backend\CommunicationManager\CommunicationHandling\inc\Communication_interfaces.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -51,16 +51,46 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Bluetooth_handling.cpp">
+    <ClCompile Include="Application\Frontend\MainWindow\src\MainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Communication.cpp">
+    <ClCompile Include="Application\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="promitator.cpp">
+    <ClCompile Include="Dear_ImGui\glad\src\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Serial_port_connection.cpp">
+    <ClCompile Include="Dear_ImGui\ImGui\source\imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dear_ImGui\ImGui\source\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dear_ImGui\ImGui\source\imgui_impl_glfw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dear_ImGui\ImGui\source\imgui_impl_opengl3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dear_ImGui\ImGui\source\imgui_tables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dear_ImGui\ImGui\source\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Backend\ButtonLogicManager\ConnectButton\src\PressConnect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Backend\CommunicationManager\BluetoothHandling\src\Bluetooth_interfaces.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Backend\CommunicationManager\BluetoothHandling\src\Bluetooth_operations.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Backend\CommunicationManager\SerialPortHandling\src\Serial_port_connection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Backend\CommunicationManager\CommunicationHandling\src\Communication_interfaces.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

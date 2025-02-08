@@ -5,7 +5,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <Serial_port_connection.h>
-#include <Communication.h> 
+#include <Communication_interfaces.h> 
 #include <MainWindow.h>
 #include <Bluetooth_operations.h> 
 

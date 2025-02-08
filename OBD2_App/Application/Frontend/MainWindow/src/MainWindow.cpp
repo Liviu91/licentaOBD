@@ -3,7 +3,7 @@
 #include <iostream> //For std::cout and std::cerr
 #include <Bluetooth_operations.h>
 #include <Serial_port_connection.h>
-#include <Communication.h>
+#include <Communication_interfaces.h>
 
 #include <imgui.h> // For ImGui functions and types
 
