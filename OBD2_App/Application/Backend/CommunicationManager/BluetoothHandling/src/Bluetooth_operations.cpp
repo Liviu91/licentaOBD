@@ -7,7 +7,6 @@ int Connect_With_ELM327_via_Bluetooth() {
     bool deviceFoundResult;
     int bluetoothEnabledStatus; // Store Bluetooth status.
     BLUETOOTH_DEVICE_INFO targetBtDeviceInfo = { sizeof(BLUETOOTH_DEVICE_INFO),0, }; // Device information structure.
-    HANDLE hBluetoothSerialPort;
     std::string elm327Command;
 
     bluetoothEnabledStatus = IsBluetoothEnabled(); // Verify if Bluetooth is activated.

@@ -2,7 +2,17 @@
 #pragma once
 
 #include <string> // For std::string
-
+#include <SDKDDKVer.h>
+#include <windows.h>
+#include <BluetoothAPIs.h> 
+#include <stdlib.h>
+#include <stdio.h>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <conio.h>
+#include <initguid.h>
+#include <windef.h>
 //Other includes if needed (for example windows.h if HANDLE is used here)
 
 
@@ -17,7 +27,8 @@ public:
 
     bool Connect();
 
-
+    bool isConnected;
+    HANDLE hBluetoothSerialPort;
     // Getters to access data from MainWindow
     const std::string& GetLastErrorMessage() const;
     const std::string& GetElm327Version() const;
@@ -27,14 +38,7 @@ public:
 private:
 
 
-
-
-    bool isConnected;
-
-
-
-
-    HANDLE hBluetoothSerialPort;
+   
 
     std::string elm327Version;
     std::string ecuId;

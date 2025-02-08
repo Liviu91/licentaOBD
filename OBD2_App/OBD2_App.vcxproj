@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="Application\Backend\ButtonLogicManager\ConnectButton\inc\PressConnect.h" />
     <ClInclude Include="Application\Backend\CommunicationManager\CommunicationHandling\inc\Communication_interfaces.h" />
+    <ClInclude Include="Application\Backend\CommunicationManager\SerialPortHandling\inc\Serial_port_connection.h" />
     <ClInclude Include="Application\Frontend\MainWindow\inc\MainWindow.h" />
     <ClInclude Include="Dear_ImGui\ImGui\include\imconfig.h" />
     <ClInclude Include="Dear_ImGui\ImGui\include\imgui.h" />

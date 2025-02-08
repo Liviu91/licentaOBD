@@ -4,9 +4,14 @@
 #include <Serial_port_connection.h>
 #include <Communication_interfaces.h>
 
+PressConnect::PressConnect() : isConnected(false), hBluetoothSerialPort(NULL){};
+
+
+
+
 bool PressConnect::Connect() {
     //MainWindow::PressConnect() : hBluetoothSerialPort = NULL;
-    HANDLE hBluetoothSerialPort = NULL;
+    //HANDLE hBluetoothSerialPort = NULL;
     // Initialize return value in case all steps are skipped (e.g., already connected). This ensures that there is a value returned for every case.
     bool success = false;
 
