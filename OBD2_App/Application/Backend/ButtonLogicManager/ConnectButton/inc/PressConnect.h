@@ -27,7 +27,7 @@ public:
 
     bool Connect();
 
-    bool isConnected;
+    bool connectionOK;
     HANDLE hBluetoothSerialPort;
     // Getters to access data from MainWindow
     const std::string& GetLastErrorMessage() const;

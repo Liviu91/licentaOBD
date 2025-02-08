@@ -52,7 +52,7 @@ void MainWindow::Draw()
 {
     //PressConnect pressConnect = false;
     bool pressConnectOneTime = false;
-    PressConnect pressConnect;
+    //PressConnect pressConnect;
     ImGui::Begin("MainWindow");
     ImGui::SetWindowPos(ImVec2(0, 0));
     ImGui::SetWindowSize(ImVec2(1280, 720));
@@ -181,8 +181,8 @@ void MainWindow::Draw()
         pressConnectOneTime = true; // Disable the button
 
 
-
-        pressConnect.reset(new PressConnect());
+        pressConnect = std::make_unique<PressConnect>();
+        //pressConnect.reset(new PressConnect());
 
         if (pressConnect->Connect()) {
             isConnected = true;

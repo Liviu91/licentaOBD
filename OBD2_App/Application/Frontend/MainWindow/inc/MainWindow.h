@@ -1,4 +1,5 @@
 #pragma once  // Include guard
+#include "PressConnect.h"
 #include <imconfig.h>
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
@@ -31,6 +32,6 @@ private:
     ImFont* defaultFont;  // Declare defaultFont as a member
     ImFont* titleFont; //Declare titleFont as a member
 
-
+    std::unique_ptr<PressConnect> pressConnect;
 
 };

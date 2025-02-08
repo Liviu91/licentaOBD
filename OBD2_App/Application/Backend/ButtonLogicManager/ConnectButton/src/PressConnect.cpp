@@ -4,7 +4,7 @@
 #include <Serial_port_connection.h>
 #include <Communication_interfaces.h>
 
-PressConnect::PressConnect() : isConnected(false), hBluetoothSerialPort(NULL){};
+PressConnect::PressConnect() : connectionOK(false), hBluetoothSerialPort(NULL){};
 
 
 
@@ -16,12 +16,12 @@ bool PressConnect::Connect() {
     bool success = false;
 
 
-    if (!isConnected) // Check if already connected
+    if (!connectionOK) // Check if already connected
     {
 
         if (Connect_With_ELM327_via_Bluetooth() && SetupSerialPort(&hBluetoothSerialPort) && InitializeELM327(&hBluetoothSerialPort))
         {
-            isConnected = true;  // Update connected status.  If all functions returned true, the connection is successful
+            connectionOK = true;  // Update connected status.  If all functions returned true, the connection is successful
 
 
             // Get initial values after successful connection
