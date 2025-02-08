@@ -25,7 +25,6 @@ private:
     std::string elm327Version; //Make sure it's std::string
     std::string ecuId;
     std::string vinNumber;
-    HANDLE hBluetoothSerialPort;
     std::string connectionMessage;
 
     GLFWwindow* window;

@@ -6,7 +6,7 @@
 #include <GLFW/glfw3.h>
 #include <Serial_port_connection.h>
 #include <Communication.h> 
-#include <MainWindow.hpp>
+#include <MainWindow.h>
 #include <Bluetooth_operations.h> 
 
 static void glfw_error_callback(int error, const char* description)

@@ -1,4 +1,4 @@
-#include "MainWindow.hpp"
+#include "MainWindow.h"
 
 #include <iostream> //For std::cout and std::cerr
 #include <Bluetooth_operations.h>
@@ -15,7 +15,6 @@ MainWindow::MainWindow() : isConnected(false), window(nullptr) // Initialize win
     elm327Version = "";
     ecuId = "";
     vinNumber = "";
-    hBluetoothSerialPort = NULL ;
 
 
 }
@@ -48,7 +47,8 @@ bool MainWindow::LoadFonts()
 
 void MainWindow::Draw()
 {
-    
+    HANDLE hBluetoothSerialPort = NULL;
+
     ImGui::Begin("MainWindow");
     ImGui::SetWindowPos(ImVec2(0, 0));
     ImGui::SetWindowSize(ImVec2(1280, 720));

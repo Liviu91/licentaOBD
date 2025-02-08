@@ -150,7 +150,7 @@
     <ClInclude Include="Application\Backend\BluetoothManager\inc\Bluetooth_operations.h" />
     <ClInclude Include="Application\Backend\CommunicationManager\inc\Communication.h" />
     <ClInclude Include="Application\Backend\SerialPortManager\inc\Serial_port_connection.h" />
-    <ClInclude Include="Application\Frontend\MainWindow\inc\MainWindow.hpp" />
+    <ClInclude Include="Application\Frontend\MainWindow\inc\MainWindow.h" />
     <ClInclude Include="Dear_ImGui\ImGui\include\imconfig.h" />
     <ClInclude Include="Dear_ImGui\ImGui\include\imgui.h" />
     <ClInclude Include="framework.h" />
