@@ -19,31 +19,29 @@
 class PressConnect {
 public:
     PressConnect();
-    //PressConnect(const PressConnect&) = delete;  //Example if you want to block copy constructor
-    //PressConnect& operator=(const PressConnect&) = delete; //Example if you want to block assignment operator, if you only want to move the object
     ~PressConnect();
-
-
 
     bool Connect();
 
     bool connectionOK;
     HANDLE hBluetoothSerialPort;
     // Getters to access data from MainWindow
- /*   const std::string& GetLastErrorMessage() const;
-    const std::string& GetElm327Version() const;
-    const std::string& GetEcuId() const;
-    const std::string& GetVinNumber() const;*/
+    std::string& GetLastErrorMessage();
+    std::string& GetElm327Version();
+    std::string& GetEcuId();
+    std::string& GetCurrentProtocol();
 
 private:
 
-
+    std::string  command_version_number;
+    std::string  command_current_protocol;
+    //const std::string  command_vin_number;
+    std::string  command_ecuid;
    
 
-    std::string elm327Version;
-    std::string ecuId;
-    std::string vinNumber;
-
+    std::string response_version_number;
+    std::string response_ecuid;
+    std::string response_current_protocol;
 
     std::string lastErrorMessage;
 

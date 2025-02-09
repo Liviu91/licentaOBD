@@ -25,7 +25,7 @@ private:
 
     std::string elm327Version; //Make sure it's std::string
     std::string ecuId;
-    std::string vinNumber;
+    std::string communication_protocol;
     std::string connectionMessage;
     bool isConnected;
     GLFWwindow* window;
