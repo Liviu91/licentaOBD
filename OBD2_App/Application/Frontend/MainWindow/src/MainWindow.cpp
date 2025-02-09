@@ -93,35 +93,36 @@ void MainWindow::Draw()
 
     ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("Connect").x) * 0.5f - 150 / 2);  // Center connect button
 
-    if (ImGui::Button("Connect", ImVec2(150, 50)) && !pressConnectOneTime) //Only allow one click if not connected
-    {
+    if (!isConnected) {
+
+        if (ImGui::Button("Connect", ImVec2(150, 50)) && !pressConnectOneTime) //Only allow one click if not connected
+        {
+
+            pressConnectOneTime = true; // Disable the button
+
+            pressConnect = std::make_unique<PressConnect>();
+
+            if (pressConnect->Connect()) {
+                isConnected = true;
 
 
-        pressConnectOneTime = true; // Disable the button
+                elm327Version = pressConnect->GetElm327Version();
+                ecuId = pressConnect->GetEcuId();
+                communication_protocol = pressConnect->GetCurrentProtocol();
+            }
+            else
+            {
+                //connectionMessage = pressConnect->GetLastErrorMessage();
+            }
 
-
-        pressConnect = std::make_unique<PressConnect>();
-
-        if (pressConnect->Connect()) {
-            isConnected = true;
-
-
-            elm327Version = pressConnect->GetElm327Version();
-            ecuId = pressConnect->GetEcuId();
-            communication_protocol = pressConnect->GetCurrentProtocol();
         }
         else
         {
-            //connectionMessage = pressConnect->GetLastErrorMessage();
+
+            /*  ImGui::BeginDisabled();
+              ImGui::Button("Connect", ImVec2(150, 50));
+              ImGui::EndDisabled();*/
         }
-
-    }
-    else if (!isConnected)
-    {
-
-        ImGui::BeginDisabled();
-        ImGui::Button("Connect", ImVec2(150, 50));
-        ImGui::EndDisabled();
     }
 
     // Left-side buttons
