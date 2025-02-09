@@ -26,17 +26,12 @@ public:
     bool connectionOK;
     HANDLE hBluetoothSerialPort;
     // Getters to access data from MainWindow
-    std::string& GetLastErrorMessage();
-    std::string& GetElm327Version();
-    std::string& GetEcuId();
-    std::string& GetCurrentProtocol();
+    std::string GetLastErrorMessage();
+    std::string GetElm327Version();
+    std::string GetEcuId();
+    std::string GetCurrentProtocol();
 
 private:
-
-    std::string  command_version_number;
-    std::string  command_current_protocol;
-    //const std::string  command_vin_number;
-    std::string  command_ecuid;
    
 
     std::string response_version_number;

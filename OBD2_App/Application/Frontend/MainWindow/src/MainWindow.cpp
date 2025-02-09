@@ -86,16 +86,14 @@ void MainWindow::Draw()
 
 
     //Connect button
-    if (isConnected)
-    {
 
-        ImGui::BeginDisabled(); // Disable if already connected
-        ImGui::Button("Connect", ImVec2(150, 50));
-        ImGui::EndDisabled();
+    // Connect Button (Center-bottom)
+    ImGui::SetCursorPosY(windowHeight - 60);
 
 
-    }
-    else if (ImGui::Button("Connect", ImVec2(150, 50)) && !pressConnectOneTime) //Only allow one click if not connected
+    ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("Connect").x) * 0.5f - 150 / 2);  // Center connect button
+
+    if (ImGui::Button("Connect", ImVec2(150, 50)) && !pressConnectOneTime) //Only allow one click if not connected
     {
 
 
@@ -197,11 +195,7 @@ void MainWindow::Draw()
     }
 
 
-    // Connect Button (Center-bottom)
-    ImGui::SetCursorPosY(windowHeight - 60);
-
-
-    ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("Connect").x) * 0.5f - 150 / 2);  // Center connect button
+    
 
 
     ImGui::Text("%s", connectionMessage.c_str()); //Display messages regarding the connection

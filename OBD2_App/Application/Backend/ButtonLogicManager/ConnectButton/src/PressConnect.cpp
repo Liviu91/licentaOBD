@@ -6,14 +6,6 @@
 
 PressConnect::PressConnect() : connectionOK(false), hBluetoothSerialPort(NULL){
 
-command_version_number = "A@ 1";
-command_current_protocol = "AT DP";
-//command_vin_number = "09 02";
-command_ecuid = "01 01";
-response_version_number = "";
-response_current_protocol = "";
-response_ecuid = "";
-lastErrorMessage = "";
 }
 
 
@@ -32,6 +24,10 @@ PressConnect::~PressConnect()
 bool PressConnect::Connect() {
 
     bool success = false;
+    std::string command_version_number = "A@ 1";
+    std::string command_current_protocol = "AT DP";
+    //std::string command_vin_number = "09 02";
+    std::string command_ecuid = "01 01";
 
 
     if (!connectionOK) // Check if already connected

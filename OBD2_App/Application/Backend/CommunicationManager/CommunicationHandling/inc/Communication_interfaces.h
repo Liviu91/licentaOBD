@@ -13,7 +13,7 @@
 #include <windef.h>
 #pragma comment(lib, "ws2_32.lib")
 #pragma comment(lib, "Bthprops.lib")
-int SendELM327Command(HANDLE* hBluetoothPort, const std::string& command);
+int SendELM327Command(HANDLE* hBluetoothPort, const std::string command);
 std::string ReadELM327Response(HANDLE* hComPort);
 int InitializeELM327(HANDLE* hBluetoothPort);
-std::string AskELM327(HANDLE* hBluetoothPort, const std::string& command);
+std::string AskELM327(HANDLE* hBluetoothPort, const std::string command);

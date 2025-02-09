@@ -1,7 +1,7 @@
 #include <Communication_interfaces.h>
 
 // Send a command to the ELM327 device.
-int SendELM327Command(HANDLE* hBluetoothPort, const std::string& command) {
+int SendELM327Command(HANDLE* hBluetoothPort, std::string command) {
     DWORD bytesWritten;
     std::string commandToSend = command + "\r"; // Add carriage return
 
@@ -86,7 +86,7 @@ int InitializeELM327(HANDLE* hBluetoothPort) {
 }
 
 //Send ELM327 command & return response
-std::string AskELM327(HANDLE *hBluetoothPort, const std::string& command) {
+std::string AskELM327(HANDLE *hBluetoothPort, std::string command) {
 
     std::string response;
 
