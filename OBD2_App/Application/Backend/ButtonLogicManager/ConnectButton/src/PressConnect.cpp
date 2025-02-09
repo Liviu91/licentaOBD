@@ -33,7 +33,7 @@ bool PressConnect::Connect() {
     if (!connectionOK) // Check if already connected
     {
 
-        if (Connect_With_ELM327_via_Bluetooth() && SetupSerialPort(&hBluetoothSerialPort) && InitializeELM327(&hBluetoothSerialPort))
+        if (!Connect_With_ELM327_via_Bluetooth() && !SetupSerialPort(&hBluetoothSerialPort) && !InitializeELM327(&hBluetoothSerialPort))
         {
            connectionOK = true;  // Update connected status.  If all functions returned true, the connection is successful
 

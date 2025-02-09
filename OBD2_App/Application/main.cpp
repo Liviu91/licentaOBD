@@ -65,7 +65,7 @@ int main(int argc, char** argv)
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         fprintf(stderr, "Failed to initialize GLAD\n");
-        return -1;
+        return 1;
     }
 
     // Setup Dear ImGui context

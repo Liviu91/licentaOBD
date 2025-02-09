@@ -23,16 +23,16 @@ int SetupSerialPort(HANDLE* hBluetoothPort) {
         if (GetLastError() == ERROR_FILE_NOT_FOUND)
         {		
             std::cerr << "Serial port does not exist!" << std::endl;
-            return -1;
+            return 1;
         }
         std::cerr << "Other errors occurred. Exiting program." << std::endl;
-        return -1;
+        return 1;
     }     
 		// Get current port settings
 		if (!GetCommState(*hBluetoothPort, &serialPortParams)) {
         std::cerr << "GetCommState failed/Baudrates can't be set!" << GetLastError() << std::endl;
         CloseHandle(*hBluetoothPort);
-        return -1;
+        return 1;
     }
 
     // Set baud rate, data bits, parity, etc.  (Example: 38400, 8N1)
@@ -45,7 +45,7 @@ int SetupSerialPort(HANDLE* hBluetoothPort) {
     if (!SetCommState(*hBluetoothPort, &serialPortParams)) {
         std::cerr << "Baudrates are NOT set: " << GetLastError() << std::endl;
         CloseHandle(*hBluetoothPort);
-        return -1;
+        return 1;
     }
     else {
         std::cout << "BaudrateS Set OK!" << std::endl;
@@ -61,7 +61,7 @@ int SetupSerialPort(HANDLE* hBluetoothPort) {
     if (!SetCommTimeouts(*hBluetoothPort, &timeouts)) {
         std::cerr << "SetCommTimeouts failed: " << GetLastError() << std::endl;
         CloseHandle(*hBluetoothPort);
-        return -1;
+        return 1;
     } else {
         std::cout << "Timeouts on port set OK" << std::endl;
     }
