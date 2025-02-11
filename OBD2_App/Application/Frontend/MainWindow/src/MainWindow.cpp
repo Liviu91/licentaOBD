@@ -30,7 +30,7 @@ bool MainWindow::LoadFonts()
 {
 
 
-    ImGuiIO& io = ImGui::GetIO();
+   ImGuiIO& io = ImGui::GetIO();
    defaultFont = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\times.ttf", 22.0f); //Change path if needed
    titleFont = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\times.ttf", 30.0f); //Change path if needed
 
@@ -71,7 +71,7 @@ void MainWindow::Draw()
     ImGui::BeginGroup();
     ImGui::Text("ELM327 version: %s", elm327Version.c_str());
     ImGui::Text("ECU id: %s", ecuId.c_str());
-    ImGui::Text("VIN: %s", communication_protocol.c_str());
+    ImGui::Text("Communication protocol: %s", communication_protocol.c_str());
     ImGui::EndGroup();
 
 
@@ -117,11 +117,10 @@ void MainWindow::Draw()
 
         }
         else
-        {
-
-            /*  ImGui::BeginDisabled();
-              ImGui::Button("Connect", ImVec2(150, 50));
-              ImGui::EndDisabled();*/
+        {   
+            ImGui::BeginDisabled();
+            ImGui::Button("Disconnect", ImVec2(150, 50));
+            ImGui::EndDisabled();
         }
     }
 
@@ -151,9 +150,6 @@ void MainWindow::Draw()
         ImGui::Button("DTC", ImVec2(buttonWidth, buttonHeight));
         ImGui::EndDisabled();
     }
-
-
-
 
 
     // Right-side buttons
@@ -195,13 +191,7 @@ void MainWindow::Draw()
 
     }
 
-
-    
-
-
     ImGui::Text("%s", connectionMessage.c_str()); //Display messages regarding the connection
-
-
 
     ImGui::End();
 

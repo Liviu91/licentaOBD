@@ -47,15 +47,18 @@ int Connect_With_ELM327_via_Bluetooth() {
             std::cout << "Succesfully enabled incoming connections" << std::endl;
         else
             std::cerr << "Failed to enable incoming connections" << std::endl;
+        return 1;
     }
     else
 
         if (!targetBtDeviceInfo.fConnected && !targetBtDeviceInfo.fRemembered) { // Device is remembered but not currently connected.
             std::cout << "Device is out of range or switched Off." << std::endl;
+            return 1;
         }
 
     if (!targetBtDeviceInfo.fConnected && targetBtDeviceInfo.fRemembered) {
         std::cout << "OBD-II adapter paired but not connected. Check power and range." << std::endl;
+        return 1;
     }
     else if (!targetBtDeviceInfo.fRemembered && !targetBtDeviceInfo.fConnected) {
         std::cout << "Connecting and pairing with OBD-II adapter..." << std::endl;
