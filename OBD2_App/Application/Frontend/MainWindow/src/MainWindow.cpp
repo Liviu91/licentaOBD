@@ -94,35 +94,52 @@ void MainWindow::Draw()
     ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("Connect").x) * 0.5f - 150 / 2);  // Center connect button
 
     if (!isConnected) {
+        ImGui::PushID("ConnectButton"); // Add a unique ID for the "Connect" button
+        if (ImGui::Button("Connect", ImVec2(150, 50))) {
+             if (!isConnected) {
 
-        if (ImGui::Button("Connect", ImVec2(150, 50)) && !pressConnectOneTime) //Only allow one click if not connected
-        {
+                        if (!pressConnectOneTime) //Only allow one click if not connected
+                        {
+                            pressConnectOneTime = true; // Disable the button
+                            
+                            //Cand nu esti in masina
+                            //isConnected = true;
+                            pressConnect = std::make_unique<PressConnect>();
 
-            pressConnectOneTime = true; // Disable the button
-
-            pressConnect = std::make_unique<PressConnect>();
-
-            if (pressConnect->Connect()) {
-                isConnected = true;
+                            if (pressConnect->Connect()) {
+                                isConnected = true;
 
 
-                elm327Version = pressConnect->GetElm327Version();
-                ecuId = pressConnect->GetEcuId();
-                communication_protocol = pressConnect->GetCurrentProtocol();
-            }
-            else
-            {
-                //connectionMessage = pressConnect->GetLastErrorMessage();
-            }
+                                elm327Version = pressConnect->GetElm327Version();
+                                ecuId = pressConnect->GetEcuId();
+                                communication_protocol = pressConnect->GetCurrentProtocol();
+                            }
 
+                            else
+                            {
+                                //connectionMessage = pressConnect->GetLastErrorMessage();
+                            }
+
+
+                        }
+                        else
+                        {
+                            /* Do nothing as the connect button is already pressed */
+                        }
+                    }
         }
-        else
-        {   
-            ImGui::BeginDisabled();
-            ImGui::Button("Disconnect", ImVec2(150, 50));
-            ImGui::EndDisabled();
-        }
+        ImGui::PopID();
+        ImGui::TextWrapped("%s", connectionMessage.c_str());
     }
+    else {
+
+        ImGui::PushID("DisconnectButton"); // Add a unique ID for the "Disconnect" button
+        if (ImGui::Button("Disconnect", ImVec2(250, 50))) {
+            // ... disconnection logic (including setting isConnected = false)
+        }
+        ImGui::PopID();
+    }
+
 
     // Left-side buttons
     ImGui::SetCursorScreenPos(ImVec2(10, verticalStart));   // Small margin from left. Set start position
