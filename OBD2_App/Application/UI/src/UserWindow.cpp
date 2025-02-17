@@ -1,4 +1,4 @@
-#include "MainWindow.h"
+#include "UserWindow.h"
 #include "PressConnect.h"
 #include <iostream> //For std::cout and std::cerr
 #include <Bluetooth_operations.h>
@@ -9,7 +9,7 @@
 
 
 
-MainWindow::MainWindow() : window(nullptr)// Initialize window to nullptr
+UserWindow::UserWindow() : window(nullptr)// Initialize window to nullptr
 {
     isConnected = false;
     elm327Version = "";
@@ -20,13 +20,13 @@ MainWindow::MainWindow() : window(nullptr)// Initialize window to nullptr
 }
 
 
-void MainWindow::Initialize(GLFWwindow* window)
+void UserWindow::Initialize(GLFWwindow* window)
 {
     this->window = window;
 }
 
 
-bool MainWindow::LoadFonts()
+bool UserWindow::LoadFonts()
 {
 
 
@@ -48,12 +48,12 @@ bool MainWindow::LoadFonts()
 
 //PressConnect::isConnected(false);
 
-void MainWindow::Draw()
+void UserWindow::Draw()
 {
     //PressConnect pressConnect = false;
     bool pressConnectOneTime = false;
     //PressConnect pressConnect;
-    ImGui::Begin("MainWindow");
+    ImGui::Begin("UserWindow");
     ImGui::SetWindowPos(ImVec2(0, 0));
     ImGui::SetWindowSize(ImVec2(1280, 720));
 

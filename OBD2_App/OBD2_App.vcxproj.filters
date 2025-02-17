@@ -24,9 +24,6 @@
     <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Frontend\MainWindow\inc\MainWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Dear_ImGui\ImGui\include\imconfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -40,6 +37,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Application\Backend\CommunicationManager\SerialPortHandling\inc\Serial_port_connection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\UI\inc\UserWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -57,13 +57,34 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application\Frontend\MainWindow\src\MainWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Application\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Dear_ImGui\glad\src\glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Backend\DeviceCommunicationManager\ConnectToOBD2\src\PressConnect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\UI\src\LoginWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\UI\src\TechnicianWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\UI\src\UserWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Backend\DeviceCommunicationManager\BluetoothHandling\src\Bluetooth_interfaces.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Backend\DeviceCommunicationManager\BluetoothHandling\src\Bluetooth_operations.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Backend\DeviceCommunicationManager\CommunicationHandling\src\Communication_interfaces.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Backend\DeviceCommunicationManager\SerialPortHandling\src\Serial_port_connection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Dear_ImGui\ImGui\source\imgui.cpp">
@@ -82,21 +103,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Dear_ImGui\ImGui\source\imgui_widgets.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Backend\ButtonLogicManager\ConnectButton\src\PressConnect.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Backend\CommunicationManager\BluetoothHandling\src\Bluetooth_interfaces.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Backend\CommunicationManager\BluetoothHandling\src\Bluetooth_operations.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Backend\CommunicationManager\SerialPortHandling\src\Serial_port_connection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Backend\CommunicationManager\CommunicationHandling\src\Communication_interfaces.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

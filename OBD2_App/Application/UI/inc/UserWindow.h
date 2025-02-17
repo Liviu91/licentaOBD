@@ -8,9 +8,9 @@
 #include <imgui.h> // Include for ImGui
 #include <GLFW/glfw3.h>
 
-class MainWindow {
+class UserWindow {
 public:
-    MainWindow();
+    UserWindow();
 
     void Initialize(GLFWwindow* window);
 

@@ -6,7 +6,7 @@
 #include <GLFW/glfw3.h>
 #include <Serial_port_connection.h>
 #include <Communication_interfaces.h> 
-#include <MainWindow.h>
+#include <UserWindow.h>
 #include <Bluetooth_operations.h> 
 
 static void glfw_error_callback(int error, const char* description)
@@ -86,9 +86,9 @@ int main(int argc, char** argv)
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 
-    MainWindow mainWindow;  // Create MainWindow instance
-    mainWindow.Initialize(window); //Initialize main window
-    if (!mainWindow.LoadFonts()) // Load fonts and check for errors
+    UserWindow UserWindow;  // Create UserWindow instance
+    UserWindow.Initialize(window); //Initialize main window
+    if (!UserWindow.LoadFonts()) // Load fonts and check for errors
     {
         std::cerr << "Error loading fonts. Exiting application." << std::endl;
 
@@ -119,7 +119,7 @@ int main(int argc, char** argv)
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        mainWindow.Draw();
+        UserWindow.Draw();
 
         // Rendering
         ImGui::Render();

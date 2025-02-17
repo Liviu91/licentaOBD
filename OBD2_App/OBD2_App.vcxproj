@@ -120,7 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Frontend\SecondaryWindows\RealTimeDataWindow\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Frontend\SecondaryWindows\DTCWindow\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Frontend\SecondaryWindows\DataLoggingWindow\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Frontend\SecondaryWindows\CommunicateWindow\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Frontend\MainWindow\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Dear_ImGui\glfw\glfw-master\include;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Dear_ImGui\glad\include;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\ButtonLogicManager\ConnectButton\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\CommunicationManager\BluetoothHandling\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\CommunicationManager\CommunicationHandling\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\CommunicationManager\SerialPortHandling\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Dear_ImGui\ImGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Dear_ImGui\glfw\glfw-master\include;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Dear_ImGui\glad\include;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\UI\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\RemoteCommunication\MQTT\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\RemoteCommunication\Clients\User\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\RemoteCommunication\Clients\Technician\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\DeviceCommunicationManager\SerialPortHandling\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\DeviceCommunicationManager\ConnectToOBD2\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\DeviceCommunicationManager\CommunicationHandling\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\DeviceCommunicationManager\BluetoothHandling\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\Database\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Dear_ImGui\ImGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,7 +149,7 @@
     <ClInclude Include="Application\Backend\ButtonLogicManager\ConnectButton\inc\PressConnect.h" />
     <ClInclude Include="Application\Backend\CommunicationManager\CommunicationHandling\inc\Communication_interfaces.h" />
     <ClInclude Include="Application\Backend\CommunicationManager\SerialPortHandling\inc\Serial_port_connection.h" />
-    <ClInclude Include="Application\Frontend\MainWindow\inc\MainWindow.h" />
+    <ClInclude Include="Application\UI\inc\UserWindow.h" />
     <ClInclude Include="Dear_ImGui\ImGui\include\imconfig.h" />
     <ClInclude Include="Dear_ImGui\ImGui\include\imgui.h" />
     <ClInclude Include="framework.h" />
@@ -164,13 +164,15 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application\Backend\ButtonLogicManager\ConnectButton\src\PressConnect.cpp" />
-    <ClCompile Include="Application\Backend\CommunicationManager\BluetoothHandling\src\Bluetooth_interfaces.cpp" />
-    <ClCompile Include="Application\Backend\CommunicationManager\BluetoothHandling\src\Bluetooth_operations.cpp" />
-    <ClCompile Include="Application\Backend\CommunicationManager\CommunicationHandling\src\Communication_interfaces.cpp" />
-    <ClCompile Include="Application\Backend\CommunicationManager\SerialPortHandling\src\Serial_port_connection.cpp" />
-    <ClCompile Include="Application\Frontend\MainWindow\src\MainWindow.cpp" />
+    <ClCompile Include="Application\Backend\DeviceCommunicationManager\BluetoothHandling\src\Bluetooth_interfaces.cpp" />
+    <ClCompile Include="Application\Backend\DeviceCommunicationManager\BluetoothHandling\src\Bluetooth_operations.cpp" />
+    <ClCompile Include="Application\Backend\DeviceCommunicationManager\CommunicationHandling\src\Communication_interfaces.cpp" />
+    <ClCompile Include="Application\Backend\DeviceCommunicationManager\ConnectToOBD2\src\PressConnect.cpp" />
+    <ClCompile Include="Application\Backend\DeviceCommunicationManager\SerialPortHandling\src\Serial_port_connection.cpp" />
     <ClCompile Include="Application\main.cpp" />
+    <ClCompile Include="Application\UI\src\LoginWindow.cpp" />
+    <ClCompile Include="Application\UI\src\TechnicianWindow.cpp" />
+    <ClCompile Include="Application\UI\src\UserWindow.cpp" />
     <ClCompile Include="Dear_ImGui\glad\src\glad.c" />
     <ClCompile Include="Dear_ImGui\ImGui\source\imgui.cpp" />
     <ClCompile Include="Dear_ImGui\ImGui\source\imgui_draw.cpp" />
