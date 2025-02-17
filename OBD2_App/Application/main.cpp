@@ -37,7 +37,7 @@ int main(int argc, char** argv)
 
 
 
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "OBD2_App", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(1000, 625, "OBD2_App", NULL, NULL);
     if (window == NULL)
         return 1;
     glfwMakeContextCurrent(window);
@@ -74,18 +74,24 @@ int main(int argc, char** argv)
     bool showUserWindow = false;  // Flag to control UserWindow visibility
 
  
-    //std::cerr << "Error loading fonts. Exiting application." << std::endl;
+    if (!loginWindow.LoadFonts()) // Load fonts and check for errors
+    {
+        std::cerr << "Error loading fonts. Exiting application." << std::endl;
 
 
-    //// Shutdown ImGui and GLFW before exiting. This needs to be called before glfwDestroyWindow and glfwTerminate
-    //ImGui_ImplOpenGL3_Shutdown();
-    //ImGui_ImplGlfw_Shutdown();
-    //ImGui::DestroyContext();
+        // Shutdown ImGui and GLFW before exiting. This needs to be called before glfwDestroyWindow and glfwTerminate
+        ImGui_ImplOpenGL3_Shutdown();
+        ImGui_ImplGlfw_Shutdown();
+        ImGui::DestroyContext();
 
-    //glfwDestroyWindow(window);
-    //glfwTerminate();
-    //exitKey = _getch();
-    //return 1; // Return an error code to indicate failure
+
+
+        glfwDestroyWindow(window);
+        glfwTerminate();
+        exitKey = _getch();
+        return 1; // Return an error code to indicate failure
+
+    }
 
  // Main loop
     while (!glfwWindowShouldClose(window)) {
