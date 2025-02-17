@@ -22,27 +22,6 @@ int main(int argc, char** argv)
     int serial_port_setup_status = 0;
 
    
-    //// Main command loop.
-    //while (true) {
-    //    std::cout << "Enter ELM327 command (or 'exit' to quit): ";
-    //    std::getline(std::cin, elm327Command); // Read input command.
-
-    //    if (elm327Command == "exit") {
-    //        break; // Exit the loop when the user enters "EXIT".
-    //    }
-
-    //    if (SendELM327Command(&hBluetoothSerialPort, elm327Command) == 0) { // Try to send a command.
-    //        std::string elm327Response = ReadELM327Response(&hBluetoothSerialPort); // Read response from ELM327.
-
-    //        if (!elm327Response.empty()) {
-    //            std::cout << elm327Response << std::endl; 
-    //        }
-    //        else {
-    //            std::cerr << "No response from ELM327." << std::endl;
-    //        }
-    //    }
-    //}
-
     // Setup window
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit())
@@ -88,24 +67,21 @@ int main(int argc, char** argv)
 
     UserWindow UserWindow;  // Create UserWindow instance
     UserWindow.Initialize(window); //Initialize main window
-    if (!UserWindow.LoadFonts()) // Load fonts and check for errors
-    {
-        std::cerr << "Error loading fonts. Exiting application." << std::endl;
+ 
+    std::cerr << "Error loading fonts. Exiting application." << std::endl;
 
 
-        // Shutdown ImGui and GLFW before exiting. This needs to be called before glfwDestroyWindow and glfwTerminate
-        ImGui_ImplOpenGL3_Shutdown();
-        ImGui_ImplGlfw_Shutdown();
-        ImGui::DestroyContext();
+    // Shutdown ImGui and GLFW before exiting. This needs to be called before glfwDestroyWindow and glfwTerminate
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
 
+    glfwDestroyWindow(window);
+    glfwTerminate();
+    exitKey = _getch();
+    return 1; // Return an error code to indicate failure
 
-
-        glfwDestroyWindow(window);
-        glfwTerminate();
-        exitKey = _getch();
-        return 1; // Return an error code to indicate failure
-
-    }
+  
     
 
 

@@ -3,16 +3,16 @@
 
 
 #include <string>
+#include <filesystem>
 
-
-#include <nlohmann/json.hpp> //For Json
+#include <json.hpp> //For Json
 
 
 using json = nlohmann::json;
 
 class DatabaseManager {
 public:
-    DatabaseManager(const std::string& databasePath);
+    DatabaseManager();
     ~DatabaseManager();
 
 

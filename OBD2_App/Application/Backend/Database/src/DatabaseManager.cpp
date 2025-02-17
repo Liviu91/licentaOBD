@@ -3,14 +3,14 @@
 #include <fstream> //for file operations if using file as a database
 #include <string>
 
-#include <nlohmann/json.hpp> //For Json if you use it as a database (add dependency)
+#include <json.hpp> //For Json if you use it as a database (add dependency)
 #include <filesystem> // If using files for the database. For checking if database exists
 
 
 using json = nlohmann::json; //Make json easier to use
 
 
-DatabaseManager::DatabaseManager(const std::string& databasePath) : databasePath(databasePath), databaseExists(false)
+DatabaseManager::DatabaseManager() : databasePath("C : \Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Database"), databaseExists(false)
 {
 
     if (std::filesystem::exists(databasePath))

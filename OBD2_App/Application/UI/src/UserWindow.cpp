@@ -12,6 +12,11 @@ UserWindow::UserWindow() : isConnected(false), isStreaming(false), isLogging(fal
 
 }
 
+void UserWindow::Initialize(GLFWwindow* window)
+{
+    this->window = window;
+}
+
 
 
 void UserWindow::Draw() {

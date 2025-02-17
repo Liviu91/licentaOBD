@@ -1,14 +1,14 @@
 #pragma once
-
-
 #include <imgui.h>
+#include <GLFW/glfw3.h>
 
 class UserWindow {
 public:
 
-
+    UserWindow();
 
     void Draw();
+    void Initialize(GLFWwindow* window);
 
     // Add setters for flags (isConnected, isStreaming, isLogging, isTechnicianRequestPending)
 
@@ -26,10 +26,9 @@ private:
     bool isConnected = false;
     bool isStreaming = false;
     bool isLogging = false;
-
+    GLFWwindow* window;
     bool isTechnicianRequestPending = false;
 
 
 
 };
-
