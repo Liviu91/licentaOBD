@@ -17,10 +17,12 @@ bool LoginWindow::ShowLoginWindow()
 
 
 void LoginWindow::Draw() {
-    if (showLoginWindow)
-    {
+  //  if (showLoginWindow)
+  //  {
 
         ImGui::Begin("Login", &showLoginWindow);
+        ImGui::SetWindowPos(ImVec2(0, 0));
+        ImGui::SetWindowSize(ImVec2(1280, 720));
         ImGui::InputText("Username", usernameBuffer, IM_ARRAYSIZE(usernameBuffer));
         ImGui::InputText("Password", passwordBuffer, IM_ARRAYSIZE(passwordBuffer), ImGuiInputTextFlags_Password);
 
@@ -35,7 +37,7 @@ void LoginWindow::Draw() {
             {
                 loggedIn = true;
                 userRole = dbManager.GetUserRole(usernameBuffer);
-                showLoginWindow = false; // Close the login window. You might want to set a flag to show the main window from the main loop
+               // showLoginWindow = false; // Close the login window. You might want to set a flag to show the main window from the main loop
             }
             else
             {
@@ -48,7 +50,7 @@ void LoginWindow::Draw() {
 
 
 
-        }
+       }
 
 
 
@@ -57,7 +59,7 @@ void LoginWindow::Draw() {
         ImGui::End();
 
 
-    }
+    
 
 }
 

@@ -66,7 +66,7 @@ int main(int argc, char** argv)
 
 
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-   // DatabaseManager dbManager("C : \Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Database\database.json"); //Provide path to your database
+    DatabaseManager dbManager("C : \Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Database\database.json"); //Provide path to your database
 
     LoginWindow loginWindow;
     UserWindow userWindow;  // Create UserWindow instance
@@ -89,10 +89,14 @@ int main(int argc, char** argv)
 
  // Main loop
     while (!glfwWindowShouldClose(window)) {
-        // ... (ImGui new frame setup)
+        glfwPollEvents();
+
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
 
         if (!loginWindow.IsLoggedIn()) {
-            loginWindow.Draw();
+           loginWindow.Draw();
 
 
             if (loginWindow.IsLoggedIn() && loginWindow.GetUserRole() == "user") //Check here if login was successful and check the role
@@ -108,9 +112,18 @@ int main(int argc, char** argv)
         else if (showUserWindow) {      //Show user window only after login is successful and correct credentials are provided for user
             userWindow.Draw();
         }
+        // Rendering
+        ImGui::Render();
+        int display_w, display_h;
+        glfwGetFramebufferSize(window, &display_w, &display_h);
+        glViewport(0, 0, display_w, display_h);
+        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
+        glClear(GL_COLOR_BUFFER_BIT);
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
+        glfwSwapBuffers(window);
         // ... (ImGui rendering and buffer swap)
-        glfwPollEvents();
+        //glfwPollEvents();
     }
     // Cleanup
     ImGui_ImplOpenGL3_Shutdown();
