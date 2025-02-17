@@ -28,7 +28,7 @@ void LoginWindow::Draw() {
         {
 
 
-            DatabaseManager dbManager("C : \Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Database");
+            DatabaseManager dbManager("C : \Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Database.json");
 
 
             if (dbManager.VerifyCredentials(usernameBuffer, passwordBuffer))

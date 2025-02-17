@@ -66,12 +66,13 @@ int main(int argc, char** argv)
 
 
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-    DatabaseManager dbManager("C : \Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Database\database.json"); //Provide path to your database
+   // DatabaseManager dbManager("C : \Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Database\database.json"); //Provide path to your database
 
     LoginWindow loginWindow;
+    UserWindow userWindow;  // Create UserWindow instance
 
-    UserWindow UserWindow;  // Create UserWindow instance
-    UserWindow.Initialize(window); //Initialize main window
+    bool showUserWindow = false;  // Flag to control UserWindow visibility
+
  
     //std::cerr << "Error loading fonts. Exiting application." << std::endl;
 
@@ -86,35 +87,31 @@ int main(int argc, char** argv)
     //exitKey = _getch();
     //return 1; // Return an error code to indicate failure
 
-  
-    
-    
-   
+ // Main loop
+    while (!glfwWindowShouldClose(window)) {
+        // ... (ImGui new frame setup)
 
-    while (!glfwWindowShouldClose(window))
-    {
+        if (!loginWindow.IsLoggedIn()) {
+            loginWindow.Draw();
 
 
+            if (loginWindow.IsLoggedIn() && loginWindow.GetUserRole() == "user") //Check here if login was successful and check the role
+            {
+
+
+                showUserWindow = true;
+
+            }
+
+
+        }
+        else if (showUserWindow) {      //Show user window only after login is successful and correct credentials are provided for user
+            userWindow.Draw();
+        }
+
+        // ... (ImGui rendering and buffer swap)
         glfwPollEvents();
-
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-        UserWindow.Draw();
-
-        // Rendering
-        ImGui::Render();
-        int display_w, display_h;
-        glfwGetFramebufferSize(window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-        glClear(GL_COLOR_BUFFER_BIT);
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-        glfwSwapBuffers(window);
     }
-
     // Cleanup
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
