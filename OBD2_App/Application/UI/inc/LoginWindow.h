@@ -2,16 +2,15 @@
 
 #include <imgui.h>
 #include <string>
-
+#include <GLFW/glfw3.h>
 
 
 class LoginWindow {
 public:
     LoginWindow();
 
-
-
     void Draw();
+    void Initialize(GLFWwindow* window);
     bool ShowLoginWindow();
     bool IsLoggedIn() const;
     std::string GetUserRole() const;
@@ -27,7 +26,7 @@ private:
 
     char usernameBuffer[256];
     char passwordBuffer[256];
-
+    GLFWwindow* window;
     std::string loginMessage;
 
 

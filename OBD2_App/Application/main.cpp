@@ -7,6 +7,9 @@
 #include <Serial_port_connection.h>
 #include <Communication_interfaces.h> 
 #include <UserWindow.h>
+#include <TechnicianWindow.h>
+#include <LoginWindow.h>
+#include <DatabaseManager.h> 
 #include <Bluetooth_operations.h> 
 
 static void glfw_error_callback(int error, const char* description)
@@ -63,27 +66,30 @@ int main(int argc, char** argv)
 
 
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+    DatabaseManager dbManager("C : \Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Database\database.json"); //Provide path to your database
 
+    LoginWindow loginWindow;
 
     UserWindow UserWindow;  // Create UserWindow instance
     UserWindow.Initialize(window); //Initialize main window
  
-    std::cerr << "Error loading fonts. Exiting application." << std::endl;
+    //std::cerr << "Error loading fonts. Exiting application." << std::endl;
 
 
-    // Shutdown ImGui and GLFW before exiting. This needs to be called before glfwDestroyWindow and glfwTerminate
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
+    //// Shutdown ImGui and GLFW before exiting. This needs to be called before glfwDestroyWindow and glfwTerminate
+    //ImGui_ImplOpenGL3_Shutdown();
+    //ImGui_ImplGlfw_Shutdown();
+    //ImGui::DestroyContext();
 
-    glfwDestroyWindow(window);
-    glfwTerminate();
-    exitKey = _getch();
-    return 1; // Return an error code to indicate failure
+    //glfwDestroyWindow(window);
+    //glfwTerminate();
+    //exitKey = _getch();
+    //return 1; // Return an error code to indicate failure
 
   
     
-
+    
+   
 
     while (!glfwWindowShouldClose(window))
     {

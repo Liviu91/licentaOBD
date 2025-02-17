@@ -12,7 +12,7 @@ using json = nlohmann::json;
 
 class DatabaseManager {
 public:
-    DatabaseManager();
+    DatabaseManager(const std::string& databasePath);
     ~DatabaseManager();
 
 
@@ -30,8 +30,6 @@ private:
 
     std::string databasePath;
     json database;
-
-
 
     bool databaseExists;
 };

@@ -10,7 +10,7 @@
 using json = nlohmann::json; //Make json easier to use
 
 
-DatabaseManager::DatabaseManager() : databasePath("C : \Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Database"), databaseExists(false)
+DatabaseManager::DatabaseManager(const std::string& databasePath) : databasePath(databasePath), databaseExists(false)
 {
 
     if (std::filesystem::exists(databasePath))

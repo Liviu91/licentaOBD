@@ -6,7 +6,10 @@
 
 LoginWindow::LoginWindow() : showLoginWindow(true), loggedIn(false) {}
 
-
+void LoginWindow::Initialize(GLFWwindow* window)
+{
+    this->window = window;
+}
 bool LoginWindow::ShowLoginWindow()
 {
     return showLoginWindow;
@@ -25,7 +28,7 @@ void LoginWindow::Draw() {
         {
 
 
-            DatabaseManager dbManager; // Create a database manager instance.  Consider making this a member variable if you'll use it frequently
+            DatabaseManager dbManager("C : \Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Database");
 
 
             if (dbManager.VerifyCredentials(usernameBuffer, passwordBuffer))
