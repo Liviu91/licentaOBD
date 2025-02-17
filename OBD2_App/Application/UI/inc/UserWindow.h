@@ -1,37 +1,35 @@
-#pragma once  // Include guard
-#include "PressConnect.h"
-#include <imconfig.h>
+#pragma once
+
+
 #include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
-#include <string>  // Include for std::string
-#include <imgui.h> // Include for ImGui
-#include <GLFW/glfw3.h>
 
 class UserWindow {
 public:
-    UserWindow();
 
-    void Initialize(GLFWwindow* window);
+
 
     void Draw();
 
-    bool LoadFonts();
+    // Add setters for flags (isConnected, isStreaming, isLogging, isTechnicianRequestPending)
+
+    void SetIsConnected(bool connected) { isConnected = connected; }
+    void SetIsStreaming(bool streaming) { isStreaming = streaming; }
+    void SetIsLogging(bool logging) { isLogging = logging; }
+
+    void SetIsTechnicianRequestPending(bool pending) { isTechnicianRequestPending = pending; }
+
+
 
 private:
+    // Flags to control UI state (make these private)
+
+    bool isConnected = false;
+    bool isStreaming = false;
+    bool isLogging = false;
+
+    bool isTechnicianRequestPending = false;
 
 
-  //  bool isConnected;
-
-    std::string elm327Version; //Make sure it's std::string
-    std::string ecuId;
-    std::string communication_protocol;
-    std::string connectionMessage;
-    bool isConnected;
-    GLFWwindow* window;
-    ImFont* defaultFont;  // Declare defaultFont as a member
-    ImFont* titleFont; //Declare titleFont as a member
-
-    std::unique_ptr<PressConnect> pressConnect;
 
 };
+

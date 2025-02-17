@@ -149,6 +149,9 @@
     <ClInclude Include="Application\Backend\ButtonLogicManager\ConnectButton\inc\PressConnect.h" />
     <ClInclude Include="Application\Backend\CommunicationManager\CommunicationHandling\inc\Communication_interfaces.h" />
     <ClInclude Include="Application\Backend\CommunicationManager\SerialPortHandling\inc\Serial_port_connection.h" />
+    <ClInclude Include="Application\Backend\Database\inc\DatabaseManager.h" />
+    <ClInclude Include="Application\UI\inc\LoginWindow.h" />
+    <ClInclude Include="Application\UI\inc\TechnicianWindow.h" />
     <ClInclude Include="Application\UI\inc\UserWindow.h" />
     <ClInclude Include="Dear_ImGui\ImGui\include\imconfig.h" />
     <ClInclude Include="Dear_ImGui\ImGui\include\imgui.h" />
@@ -164,6 +167,7 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Application\Backend\Database\src\DatabaseManager.cpp" />
     <ClCompile Include="Application\Backend\DeviceCommunicationManager\BluetoothHandling\src\Bluetooth_interfaces.cpp" />
     <ClCompile Include="Application\Backend\DeviceCommunicationManager\BluetoothHandling\src\Bluetooth_operations.cpp" />
     <ClCompile Include="Application\Backend\DeviceCommunicationManager\CommunicationHandling\src\Communication_interfaces.cpp" />

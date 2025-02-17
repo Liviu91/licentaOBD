@@ -42,6 +42,15 @@
     <ClInclude Include="Application\UI\inc\UserWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Application\Backend\Database\inc\DatabaseManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\UI\inc\LoginWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\UI\inc\TechnicianWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="OBD2_App.rc">
@@ -103,6 +112,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Dear_ImGui\ImGui\source\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Backend\Database\src\DatabaseManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

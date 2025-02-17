@@ -1,208 +1,195 @@
+// OBD2_App/Application/Frontend/UI/src/UserWindow.cpp
 #include "UserWindow.h"
-#include "PressConnect.h"
-#include <iostream> //For std::cout and std::cerr
-#include <Bluetooth_operations.h>
-#include <Serial_port_connection.h>
-#include <Communication_interfaces.h>
-#include <PressConnect.h>
-#include <imgui.h> // For ImGui functions and types
+
+#include <imgui.h>
+#include <iostream> //For printing debug messages
+// other includes, for example for datalogging and communication if needed in this window
 
 
-
-UserWindow::UserWindow() : window(nullptr)// Initialize window to nullptr
+UserWindow::UserWindow() : isConnected(false), isStreaming(false), isLogging(false), isTechnicianRequestPending(false)
 {
-    isConnected = false;
-    elm327Version = "";
-    ecuId = "";
-    communication_protocol = "";
 
 
 }
 
 
-void UserWindow::Initialize(GLFWwindow* window)
-{
-    this->window = window;
-}
+
+void UserWindow::Draw() {
+    ImGui::Begin("User Window", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
 
 
-bool UserWindow::LoadFonts()
-{
+    if (ImGui::BeginMenu("Connect")) {
+        if (!isConnected) {
+            if (ImGui::MenuItem("Connect to ELM327")) {
+                // Handle connect
+
+                 // ... (Your connection logic, potentially calling a ConnectionManager or similar)
+                  // ... (Set isConnected = true on successful connection) ...
+
+            }
+        }
+        else {
+            if (ImGui::MenuItem("Disconnect from ELM327")) {
+                // Handle disconnect
+
+                // ... (Your disconnection logic)
+                 //Set isConnected = false on disconnect
 
 
-    ImGuiIO& io = ImGui::GetIO();
-   defaultFont = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\times.ttf", 22.0f); //Change path if needed
-   titleFont = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\times.ttf", 30.0f); //Change path if needed
-
-
-
-    if (defaultFont == nullptr || titleFont == nullptr)
-    {
-        return false; //Return false on font load fail. The app should handle it.
+            }
+        }
+        ImGui::EndMenu();
 
     }
 
-    return true; //Fonts are loaded correctly
-}
-
-
-//PressConnect::isConnected(false);
-
-void UserWindow::Draw()
-{
-    //PressConnect pressConnect = false;
-    bool pressConnectOneTime = false;
-    //PressConnect pressConnect;
-    ImGui::Begin("UserWindow");
-    ImGui::SetWindowPos(ImVec2(0, 0));
-    ImGui::SetWindowSize(ImVec2(1280, 720));
-
-
-    // Title (Times New Roman, 18pt)
-    ImGui::PushFont(titleFont); // Assuming you've loaded the title font
-    ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("OBD-II Diagnosis Application").x) * 0.5f); // Centered
-    ImGui::Text("OBD-II Diagnosis Application");
-    ImGui::PopFont();
+    if (isConnected) //Only display these menus if connected
+    {
 
 
 
-    ImGui::PushFont(defaultFont); // Assuming you've loaded the default font for rest of elements
-    // Message Area (Left side)
-    ImGui::BeginGroup();
-    ImGui::Text("ELM327 version: %s", elm327Version.c_str());
-    ImGui::Text("ECU id: %s", ecuId.c_str());
-    ImGui::Text("VIN: %s", communication_protocol.c_str());
-    ImGui::EndGroup();
+        if (ImGui::BeginMenu("Real-time Data")) {
+            if (!isStreaming) {
+                if (ImGui::MenuItem("Start Streaming"))
+                {
 
 
-    ImGui::PopFont();
 
-    // Button Positioning
-    float buttonWidth = 150.0f;  // Adjust as needed
-    float buttonHeight = 30.0f; // Adjust as needed
-    float windowWidth = ImGui::GetWindowWidth();
-    float windowHeight = ImGui::GetWindowHeight();
-    float verticalStart = windowHeight * (2.0f / 3.0f) - buttonHeight / 2; //Start at 2/3 for each side. Center button vertically by /2 its height
+                    isStreaming = true;
+
+                    // ... (Start streaming logic.  Get the access key from the server, if applicable)
+                }
 
 
-    //Connect button
 
-    // Connect Button (Center-bottom)
-    ImGui::SetCursorPosY(windowHeight - 60);
-
-
-    ImGui::SetCursorPosX((ImGui::GetWindowWidth() - ImGui::CalcTextSize("Connect").x) * 0.5f - 150 / 2);  // Center connect button
-
-    if (!isConnected) {
-
-        if (ImGui::Button("Connect", ImVec2(150, 50)) && !pressConnectOneTime) //Only allow one click if not connected
-        {
-
-            pressConnectOneTime = true; // Disable the button
-
-            pressConnect = std::make_unique<PressConnect>();
-
-            if (pressConnect->Connect()) {
-                isConnected = true;
-
-
-                elm327Version = pressConnect->GetElm327Version();
-                ecuId = pressConnect->GetEcuId();
-                communication_protocol = pressConnect->GetCurrentProtocol();
             }
-            else
+            if (isStreaming) {
+                if (ImGui::MenuItem("Stop Streaming")) {
+                    // ... (Stop streaming logic) ...
+
+                    isStreaming = false;
+
+                }
+            }
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("DTC")) {
+            if (ImGui::MenuItem("View DTCs")) {
+                // ... (View DTCs logic)
+
+            }
+
+            if (ImGui::MenuItem("Clear DTCs"))
             {
-                //connectionMessage = pressConnect->GetLastErrorMessage();
+                // ... (Clear DTCs logic, with confirmation dialog if necessary)
             }
 
+            ImGui::EndMenu();
         }
-        else
+
+        if (ImGui::BeginMenu("Data Logging"))
         {
 
-            /*  ImGui::BeginDisabled();
-              ImGui::Button("Connect", ImVec2(150, 50));
-              ImGui::EndDisabled();*/
-        }
-    }
 
-    // Left-side buttons
-    ImGui::SetCursorScreenPos(ImVec2(10, verticalStart));   // Small margin from left. Set start position
-    if (isConnected) {
-        if (ImGui::Button("RealTime Data", ImVec2(buttonWidth, buttonHeight))) {
-            // Handle RealTimeData button click
-        }
-    }
-    else
-    {
-        ImGui::BeginDisabled();
-        ImGui::Button("RealTime Data", ImVec2(buttonWidth, buttonHeight));
-        ImGui::EndDisabled();
+            if (!isLogging)
+            {
 
 
-    }
-    ImGui::SetCursorScreenPos(ImVec2(10, verticalStart + buttonHeight + 10)); // Place DTC button below RealTimeData with some spacing
-    if (isConnected) {
-        if (ImGui::Button("DTC", ImVec2(buttonWidth, buttonHeight))) {
-            // Handle DTC button click
-        }
-    }
-    else {
-        ImGui::BeginDisabled();
-        ImGui::Button("DTC", ImVec2(buttonWidth, buttonHeight));
-        ImGui::EndDisabled();
-    }
+
+
+                if (ImGui::MenuItem("Start Logging"))
+                {
+
+                    //Handle start logging
+
+
+                    isLogging = true;
+
+
+                }
 
 
 
 
 
-    // Right-side buttons
-    ImGui::SetCursorScreenPos(ImVec2(windowWidth - buttonWidth - 10, verticalStart));  // Small margin from right
-    if (isConnected) {
-
-        if (ImGui::Button("Communicate with Elm327", ImVec2(buttonWidth, buttonHeight))) {
-            // Handle Communicate button click
-        }
-
-    }
-    else
-    {
-        ImGui::BeginDisabled();
-        ImGui::Button("Communicate with Elm327", ImVec2(buttonWidth, buttonHeight));
-
-        ImGui::EndDisabled();
-
-    }
-
-    ImGui::SetCursorScreenPos(ImVec2(windowWidth - buttonWidth - 10, verticalStart + buttonHeight + 10)); //Spacing for data logging button
+            }
 
 
-    if (isConnected)
-    {
 
-        if (ImGui::Button("Data logging", ImVec2(buttonWidth, buttonHeight))) {
+            if (isLogging)
+            {
+
+
+
+
+
+
+                if (ImGui::MenuItem("Stop Logging"))
+                {
+
+
+
+
+                    isLogging = false;
+                    //Handle stop logging
+
+
+
+                }
+
+
+
+            }
+
+
+            ImGui::EndMenu();
 
         }
 
+
+
+
+        if (ImGui::BeginMenu("Technician Request")) {
+
+            if (isTechnicianRequestPending) //Only show this if there is a pending request
+            {
+
+
+
+
+                if (ImGui::MenuItem("Approve Request"))
+                {
+                    isTechnicianRequestPending = false;
+
+                    // ... (Approve technician communication request logic)
+                }
+
+
+                if (ImGui::MenuItem("Deny Request"))
+                {
+
+
+                    isTechnicianRequestPending = false;
+                    // ... (Deny technician communication request logic) ...
+
+                }
+
+            }
+
+
+            ImGui::EndMenu();
+        }
+
+
+
+
+
+
     }
-    else
-    {
-
-        ImGui::BeginDisabled();
-        ImGui::Button("Data logging", ImVec2(buttonWidth, buttonHeight));
-
-        ImGui::EndDisabled();
-
-    }
-
-
-    
-
-
-    ImGui::Text("%s", connectionMessage.c_str()); //Display messages regarding the connection
 
 
 
     ImGui::End();
+
 
 }
