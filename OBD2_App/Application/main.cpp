@@ -101,23 +101,27 @@ int main(int argc, char** argv)
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        if (!loginWindow.IsLoggedIn()) {
-           loginWindow.Draw();
+        //if (!loginWindow.IsLoggedIn()) {
+        //   loginWindow.Draw();
 
 
-            if (loginWindow.IsLoggedIn() && loginWindow.GetUserRole() == "user") //Check here if login was successful and check the role
-            {
+        //    if (loginWindow.IsLoggedIn() && loginWindow.GetUserRole() == "user") //Check here if login was successful and check the role
+        //    {
 
 
-                showUserWindow = true;
+        //        showUserWindow = true;
 
-            }
+        //    }
 
 
-        }
-        else if (showUserWindow) {      //Show user window only after login is successful and correct credentials are provided for user
-            userWindow.Draw();
-        }
+        //}
+        //else if (showUserWindow) {      //Show user window only after login is successful and correct credentials are provided for user
+        //    userWindow.Draw();
+        //}
+
+        userWindow.Draw();
+
+
         // Rendering
         ImGui::Render();
         int display_w, display_h;

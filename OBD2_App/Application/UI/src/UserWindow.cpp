@@ -1,4 +1,5 @@
 #include "UserWindow.h"
+#include "PressConnect.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -19,7 +20,7 @@ void UserWindow::Draw() {
 
     ImGui::SetNextWindowSize(ImVec2(500, 600));
     // User Window with Menu Bar Flag
-    ImGui::Begin("User Window", nullptr, ImGuiWindowFlags_MenuBar);
+    ImGui::Begin("User Window", nullptr, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoCollapse);
 
     // Menu Bar inside the User Window
     if (ImGui::BeginMenuBar()) {
@@ -59,7 +60,8 @@ void UserWindow::Draw() {
     //float textWidth = ImGui::CalcTextSize("Activity Log").x;
     //ImGui::SetCursorPosX((windowSize.x - textWidth) * 0.5f);
     //ImGui::Text("Activity Log");
-
+       // Centered User Window title
+   
     // Centered Message Area with Size (250,350)
     ImVec2 availSize = ImGui::GetContentRegionAvail();
     ImGui::SetCursorPosX((availSize.x - 250) * 0.5f);
@@ -78,7 +80,8 @@ void UserWindow::Draw() {
 void UserWindow::ConnectToELM327() {
     messageLog.push_back("Connecting to ELM327...");
     std::cout << "Connecting to ELM327..." << std::endl;
-    // Actual connection logic here
+    PressConnect pressConnectInstance;
+    pressConnectInstance.Connect();
 }
 
 void UserWindow::DisconnectFromELM327() {

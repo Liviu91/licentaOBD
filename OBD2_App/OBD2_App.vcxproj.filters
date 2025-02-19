@@ -33,9 +33,6 @@
     <ClInclude Include="Application\Backend\CommunicationManager\CommunicationHandling\inc\Communication_interfaces.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Backend\ButtonLogicManager\ConnectButton\inc\PressConnect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Application\Backend\CommunicationManager\SerialPortHandling\inc\Serial_port_connection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -49,6 +46,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Application\UI\inc\TechnicianWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Backend\DeviceCommunicationManager\ConnectToOBD2\inc\PressConnect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
