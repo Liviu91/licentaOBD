@@ -12,6 +12,7 @@ public:
     UserWindow();
     void Draw();
     void Initialize(GLFWwindow* window);
+    void AddMessage(const std::string& msg);
 
 private:
 	bool isConnected = false;
@@ -26,6 +27,7 @@ private:
     void StopStreaming();
     void ManageDTCs();
     void LogData();
+
 };
 
 #endif // USERWINDOW_H

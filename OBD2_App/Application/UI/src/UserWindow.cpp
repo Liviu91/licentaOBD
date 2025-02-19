@@ -16,6 +16,9 @@ void UserWindow::Initialize(GLFWwindow* window)
 {
     this->window = window;
 }
+void UserWindow::AddMessage(const std::string& msg) {
+    messageLog.push_back(msg);
+}
 void UserWindow::Draw() {
 
     ImGui::SetNextWindowSize(ImVec2(500, 600));
@@ -62,12 +65,14 @@ void UserWindow::Draw() {
     //ImGui::Text("Activity Log");
        // Centered User Window title
    
-    // Centered Message Area with Size (250,350)
+   // Centered Message Area with Size (250,350)
     ImVec2 availSize = ImGui::GetContentRegionAvail();
     ImGui::SetCursorPosX((availSize.x - 250) * 0.5f);
     ImGui::SetCursorPosY(((availSize.y - 350) * 0.5f) + 50);
     ImGui::BeginChild("ScrollingRegion", ImVec2(250, 350), true);
     for (const auto& msg : messageLog) {
+        ImVec2 textSize = ImGui::CalcTextSize(msg.c_str());
+        ImGui::SetCursorPosX((250 - textSize.x) * 0.5f); // Center messages
         ImGui::TextWrapped("%s", msg.c_str());
     }
     ImGui::EndChild();

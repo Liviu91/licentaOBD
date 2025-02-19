@@ -1,4 +1,6 @@
 #include <Bluetooth_interfaces.h> 
+#include <UserWindow.h>
+
 #pragma warning(disable: 4995)
 HANDLE g_bluetoothRadio; // Global handle for Bluetooth radio.
 HBLUETOOTH_AUTHENTICATION_REGISTRATION g_authenticationHandle = 0; // Global handle for Bluetooth Authentication.
@@ -43,6 +45,8 @@ bool FindBluetoothDevice(BLUETOOTH_DEVICE_INFO* btDeviceInfo) {
     HBLUETOOTH_RADIO_FIND btRadioFindHandle;
     HBLUETOOTH_DEVICE_FIND btDeviceFindHandle;
     
+    UserWindow userWindow;
+
     int radioID;
     int deviceID;
     DWORD btInfoStatus;
@@ -73,7 +77,8 @@ bool FindBluetoothDevice(BLUETOOTH_DEVICE_INFO* btDeviceInfo) {
     // Get radio info.   
     btInfoStatus = BluetoothGetRadioInfo(g_bluetoothRadio, &btRadioInfo);
 
-    if (btInfoStatus == ERROR_SUCCESS)		std::cout << "Bluetooth Radio looks fine!" << std::endl;
+    if (btInfoStatus == ERROR_SUCCESS)		
+        userWindow.AddMessage("Bluetooth Radio looks fine!");
 
     else {
         std::cerr << "Failed to get Bluetooth adapter information (Code: " << btInfoStatus << ")." << std::endl;
