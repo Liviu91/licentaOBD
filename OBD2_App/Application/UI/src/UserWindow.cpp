@@ -17,6 +17,7 @@ void UserWindow::Initialize(GLFWwindow* window)
 }
 void UserWindow::Draw() {
 
+    ImGui::SetNextWindowSize(ImVec2(500, 600));
     // User Window with Menu Bar Flag
     ImGui::Begin("User Window", nullptr, ImGuiWindowFlags_MenuBar);
 
@@ -53,15 +54,21 @@ void UserWindow::Draw() {
     }
 
     ImGui::Separator();
+    //// Centered Activity Log title
+    //ImVec2 windowSize = ImGui::GetWindowSize();
+    //float textWidth = ImGui::CalcTextSize("Activity Log").x;
+    //ImGui::SetCursorPosX((windowSize.x - textWidth) * 0.5f);
+    //ImGui::Text("Activity Log");
 
-    // Central message area
-    ImGui::TextWrapped("Activity Log:");
-    ImGui::BeginChild("ScrollingRegion", ImVec2(0, 150), true);
+    // Centered Message Area with Size (250,350)
+    ImVec2 availSize = ImGui::GetContentRegionAvail();
+    ImGui::SetCursorPosX((availSize.x - 250) * 0.5f);
+    ImGui::SetCursorPosY(((availSize.y - 350) * 0.5f) + 50);
+    ImGui::BeginChild("ScrollingRegion", ImVec2(250, 350), true);
     for (const auto& msg : messageLog) {
         ImGui::TextWrapped("%s", msg.c_str());
     }
     ImGui::EndChild();
-
     ImGui::End(); // Close "User Window"
 
     // Render ImGui
