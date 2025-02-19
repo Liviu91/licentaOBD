@@ -1,10 +1,9 @@
-// OBD2_App/Application/Frontend/UI/src/UserWindow.cpp
 #include "UserWindow.h"
-
-#include <imgui.h>
-#include <iostream> //For printing debug messages
-// other includes, for example for datalogging and communication if needed in this window
-
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#include <GLFW/glfw3.h>
+#include <iostream>
 
 UserWindow::UserWindow() : isConnected(false), isStreaming(false), isLogging(false), isTechnicianRequestPending(false)
 {
@@ -16,185 +15,67 @@ void UserWindow::Initialize(GLFWwindow* window)
 {
     this->window = window;
 }
-
-
-
 void UserWindow::Draw() {
-    ImGui::Begin("User Window", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
+  
 
-
-    if (ImGui::BeginMenu("Connect")) {
-        if (!isConnected) {
+    if (ImGui::BeginMainMenuBar()) {
+        if (ImGui::BeginMenu("Options")) {
             if (ImGui::MenuItem("Connect to ELM327")) {
-                // Handle connect
-
-                 // ... (Your connection logic, potentially calling a ConnectionManager or similar)
-                  // ... (Set isConnected = true on successful connection) ...
-
+                ConnectToELM327();
             }
-        }
-        else {
-            if (ImGui::MenuItem("Disconnect from ELM327")) {
-                // Handle disconnect
-
-                // ... (Your disconnection logic)
-                 //Set isConnected = false on disconnect
-
-
+            if (ImGui::MenuItem("Start Streaming Live Data")) {
+                StartStreaming();
             }
+            if (ImGui::MenuItem("See/Delete DTCs")) {
+                ManageDTCs();
+            }
+            if (ImGui::MenuItem("Data Logging")) {
+                LogData();
+            }
+            ImGui::EndMenu();
         }
-        ImGui::EndMenu();
-
+        ImGui::EndMainMenuBar();
     }
 
-    if (isConnected) //Only display these menus if connected
-    {
-
-
-
-        if (ImGui::BeginMenu("Real-time Data")) {
-            if (!isStreaming) {
-                if (ImGui::MenuItem("Start Streaming"))
-                {
-
-
-
-                    isStreaming = true;
-
-                    // ... (Start streaming logic.  Get the access key from the server, if applicable)
-                }
-
-
-
-            }
-            if (isStreaming) {
-                if (ImGui::MenuItem("Stop Streaming")) {
-                    // ... (Stop streaming logic) ...
-
-                    isStreaming = false;
-
-                }
-            }
-            ImGui::EndMenu();
-        }
-
-        if (ImGui::BeginMenu("DTC")) {
-            if (ImGui::MenuItem("View DTCs")) {
-                // ... (View DTCs logic)
-
-            }
-
-            if (ImGui::MenuItem("Clear DTCs"))
-            {
-                // ... (Clear DTCs logic, with confirmation dialog if necessary)
-            }
-
-            ImGui::EndMenu();
-        }
-
-        if (ImGui::BeginMenu("Data Logging"))
-        {
-
-
-            if (!isLogging)
-            {
-
-
-
-
-                if (ImGui::MenuItem("Start Logging"))
-                {
-
-                    //Handle start logging
-
-
-                    isLogging = true;
-
-
-                }
-
-
-
-
-
-            }
-
-
-
-            if (isLogging)
-            {
-
-
-
-
-
-
-                if (ImGui::MenuItem("Stop Logging"))
-                {
-
-
-
-
-                    isLogging = false;
-                    //Handle stop logging
-
-
-
-                }
-
-
-
-            }
-
-
-            ImGui::EndMenu();
-
-        }
-
-
-
-
-        if (ImGui::BeginMenu("Technician Request")) {
-
-            if (isTechnicianRequestPending) //Only show this if there is a pending request
-            {
-
-
-
-
-                if (ImGui::MenuItem("Approve Request"))
-                {
-                    isTechnicianRequestPending = false;
-
-                    // ... (Approve technician communication request logic)
-                }
-
-
-                if (ImGui::MenuItem("Deny Request"))
-                {
-
-
-                    isTechnicianRequestPending = false;
-                    // ... (Deny technician communication request logic) ...
-
-                }
-
-            }
-
-
-            ImGui::EndMenu();
-        }
-
-
-
-
-
-
+    ImGui::Begin("User Window");
+
+    ImGui::Separator();
+
+    // Central message area
+    ImGui::TextWrapped("Activity Log:");
+    ImGui::BeginChild("ScrollingRegion", ImVec2(0, 150), true);
+    for (const auto& msg : messageLog) {
+        ImGui::TextWrapped("%s", msg.c_str());
     }
-
-
+    ImGui::EndChild();
 
     ImGui::End();
 
+    // Render ImGui
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
 
+void UserWindow::ConnectToELM327() {
+    messageLog.push_back("Connecting to ELM327...");
+    std::cout << "Connecting to ELM327..." << std::endl;
+    // Actual connection logic here
+}
+
+void UserWindow::StartStreaming() {
+    messageLog.push_back("Starting data stream...");
+    std::cout << "Starting data stream..." << std::endl;
+    // Streaming logic here
+}
+
+void UserWindow::ManageDTCs() {
+    messageLog.push_back("Managing DTCs...");
+    std::cout << "Managing DTCs..." << std::endl;
+    // DTC management logic here
+}
+
+void UserWindow::LogData() {
+    messageLog.push_back("Logging data...");
+    std::cout << "Logging data..." << std::endl;
+    // Data logging logic here
 }

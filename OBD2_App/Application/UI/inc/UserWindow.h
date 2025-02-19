@@ -1,34 +1,29 @@
-#pragma once
-#include <imgui.h>
+#ifndef USERWINDOW_H
+#define USERWINDOW_H
+
+#include "imgui.h"
+#include <vector>
+#include <string>
 #include <GLFW/glfw3.h>
 
 class UserWindow {
 public:
 
     UserWindow();
-
     void Draw();
     void Initialize(GLFWwindow* window);
 
-    // Add setters for flags (isConnected, isStreaming, isLogging, isTechnicianRequestPending)
-
-    void SetIsConnected(bool connected) { isConnected = connected; }
-    void SetIsStreaming(bool streaming) { isStreaming = streaming; }
-    void SetIsLogging(bool logging) { isLogging = logging; }
-
-    void SetIsTechnicianRequestPending(bool pending) { isTechnicianRequestPending = pending; }
-
-
-
 private:
-    // Flags to control UI state (make these private)
-
-    bool isConnected = false;
+	bool isConnected = false;
     bool isStreaming = false;
     bool isLogging = false;
     GLFWwindow* window;
     bool isTechnicianRequestPending = false;
-
-
-
+    std::vector<std::string> messageLog;
+    void ConnectToELM327();
+    void StartStreaming();
+    void ManageDTCs();
+    void LogData();
 };
+
+#endif // USERWINDOW_H
