@@ -17,7 +17,9 @@ void UserWindow::Initialize(GLFWwindow* window)
 }
 void UserWindow::Draw() {
 
-    if (ImGui::BeginMainMenuBar()) {
+    ImGui::Begin("User Window", nullptr, ImGuiWindowFlags_MenuBar);
+
+    if (ImGui::BeginMenuBar()) {
         if (ImGui::BeginMenu("Options")) {
             if (ImGui::BeginMenu("Connect to ELM327")) {
                 if (ImGui::MenuItem("Connect")) {
@@ -54,7 +56,7 @@ void UserWindow::Draw() {
             }
             
         }
-        ImGui::EndMainMenuBar();
+        ImGui::EndMenuBar();
     }
 
         ImGui::Separator();
@@ -67,7 +69,7 @@ void UserWindow::Draw() {
         }
         ImGui::EndChild();
 
-      //  ImGui::End();
+      ImGui::End();
 
         // Render ImGui
         ImGui::Render();
