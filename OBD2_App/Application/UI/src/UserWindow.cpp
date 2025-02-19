@@ -17,8 +17,10 @@ void UserWindow::Initialize(GLFWwindow* window)
 }
 void UserWindow::Draw() {
 
+    // User Window with Menu Bar Flag
     ImGui::Begin("User Window", nullptr, ImGuiWindowFlags_MenuBar);
 
+    // Menu Bar inside the User Window
     if (ImGui::BeginMenuBar()) {
         if (ImGui::BeginMenu("Options")) {
             if (ImGui::BeginMenu("Connect to ELM327")) {
@@ -39,42 +41,32 @@ void UserWindow::Draw() {
                 }
                 ImGui::EndMenu();
             }
-            if (ImGui::BeginMenu("DTC")) {
-                if (ImGui::MenuItem("Visualize DTCs")) {
-                    ManageDTCs();
-                }
-                if (ImGui::MenuItem("Delete DTCs")) {
-                    LogData();
-                }
-                ImGui::EndMenu();
+            if (ImGui::MenuItem("See/Delete DTCs")) {
+                ManageDTCs();
             }
-            if (ImGui::BeginMenu("Data Logging")) {
-                if (ImGui::MenuItem("LogData")) {
-                    ManageDTCs();
-                }
-                ImGui::EndMenu();
+            if (ImGui::MenuItem("Data Logging")) {
+                LogData();
             }
-            
+            ImGui::EndMenu();
         }
         ImGui::EndMenuBar();
     }
 
-        ImGui::Separator();
+    ImGui::Separator();
 
-        // Central message area
-        ImGui::TextWrapped("Activity Log:");
-        ImGui::BeginChild("ScrollingRegion", ImVec2(0, 150), true);
-        for (const auto& msg : messageLog) {
-            ImGui::TextWrapped("%s", msg.c_str());
-        }
-        ImGui::EndChild();
+    // Central message area
+    ImGui::TextWrapped("Activity Log:");
+    ImGui::BeginChild("ScrollingRegion", ImVec2(0, 150), true);
+    for (const auto& msg : messageLog) {
+        ImGui::TextWrapped("%s", msg.c_str());
+    }
+    ImGui::EndChild();
 
-      ImGui::End();
+    ImGui::End(); // Close "User Window"
 
-        // Render ImGui
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    
+    // Render ImGui
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 void UserWindow::ConnectToELM327() {
     messageLog.push_back("Connecting to ELM327...");
