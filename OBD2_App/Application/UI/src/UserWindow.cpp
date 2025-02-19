@@ -17,27 +17,6 @@ void UserWindow::Initialize(GLFWwindow* window)
 }
 void UserWindow::Draw() {
 
-
-    if (ImGui::BeginMainMenuBar()) {
-        if (ImGui::BeginMenu("Options")) {
-            if (ImGui::MenuItem("Connect to ELM327")) {
-                ConnectToELM327();
-            }
-            if (ImGui::MenuItem("Start Streaming Live Data")) {
-                StartStreaming();
-            }
-            if (ImGui::MenuItem("See/Delete DTCs")) {
-                ManageDTCs();
-            }
-            if (ImGui::MenuItem("Data Logging")) {
-                LogData();
-            }
-            ImGui::EndMenu();
-        }
-        ImGui::EndMainMenuBar();
-    }
-
-    //ImGui::Begin("User Window");
     if (ImGui::BeginMainMenuBar()) {
         if (ImGui::BeginMenu("Options")) {
             if (ImGui::BeginMenu("Connect to ELM327")) {
