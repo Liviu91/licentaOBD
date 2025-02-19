@@ -21,7 +21,9 @@ private:
     bool isTechnicianRequestPending = false;
     std::vector<std::string> messageLog;
     void ConnectToELM327();
+    void DisconnectFromELM327();
     void StartStreaming();
+    void StopStreaming();
     void ManageDTCs();
     void LogData();
 };
