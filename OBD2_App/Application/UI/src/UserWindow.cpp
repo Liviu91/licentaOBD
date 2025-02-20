@@ -1,14 +1,19 @@
 #include "UserWindow.h"
 #include "PressConnect.h"
+#include "Bluetooth_operations.h"
+#include "Serial_port_connection.h"
+#include "Communication_interfaces.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <chrono>
+#include <thread>
 
 UserWindow::UserWindow() : isConnected(false), isStreaming(false), isLogging(false), isTechnicianRequestPending(false)
 {
-
+    HANDLE hBluetoothPort = NULL;
 
 }
 
@@ -83,15 +88,24 @@ void UserWindow::Draw() {
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 void UserWindow::ConnectToELM327() {
-    messageLog.push_back("Connecting to ELM327...");
-    std::cout << "Connecting to ELM327..." << std::endl;
-    PressConnect pressConnectInstance;
-    pressConnectInstance.Connect();
+    if (isConnecting) return; // Prevent multiple simultaneous connections
+    isConnecting = true;
+
+    // Launch a separate thread for connection
+    connectionThread = std::thread([this]() {
+        AddMessage("Connecting to ELM327...");
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        if (!Connect_With_ELM327_via_Bluetooth() && !SetupSerialPort(&hBluetoothSerialPort) && !InitializeELM327(&hBluetoothSerialPort))
+            isConnecting = false;
+
+    connectionThread.detach(); // Allow it to run independently
+}
 }
 
 void UserWindow::DisconnectFromELM327() {
     messageLog.push_back("Disconnecting from ELM327...");
-    std::cout << "Disconnecting from ELM327..." << std::endl;
+    //std::cout << "Disconnecting from ELM327..." << std::endl;
     // Actual disconnection logic here
 }
 

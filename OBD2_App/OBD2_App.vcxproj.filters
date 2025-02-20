@@ -30,12 +30,6 @@
     <ClInclude Include="Dear_ImGui\ImGui\include\imgui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Backend\CommunicationManager\CommunicationHandling\inc\Communication_interfaces.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Backend\CommunicationManager\SerialPortHandling\inc\Serial_port_connection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Application\UI\inc\UserWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -49,6 +43,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Application\Backend\DeviceCommunicationManager\ConnectToOBD2\inc\PressConnect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Backend\DeviceCommunicationManager\BluetoothHandling\inc\Bluetooth_interfaces.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Backend\DeviceCommunicationManager\BluetoothHandling\inc\Bluetooth_operations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Backend\DeviceCommunicationManager\SerialPortHandling\inc\Serial_port_connection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Backend\DeviceCommunicationManager\CommunicationHandling\inc\Communication_interfaces.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

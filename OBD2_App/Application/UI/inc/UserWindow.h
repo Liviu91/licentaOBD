@@ -4,8 +4,10 @@
 #include "imgui.h"
 #include <vector>
 #include <string>
+#include <windows.h>
 #include <GLFW/glfw3.h>
-
+#include <thread>
+#include <chrono>
 class UserWindow {
 public:
 
@@ -13,6 +15,8 @@ public:
     void Draw();
     void Initialize(GLFWwindow* window);
     void AddMessage(const std::string& msg);
+    void ConnectToELM327();
+    HANDLE hBluetoothPort;
 
 private:
 	bool isConnected = false;
@@ -21,7 +25,9 @@ private:
     GLFWwindow* window;
     bool isTechnicianRequestPending = false;
     std::vector<std::string> messageLog;
-    void ConnectToELM327();
+    std::thread connectionThread; // Background thread
+    bool isConnecting =  false; // Ensures only one connection at a time
+    
     void DisconnectFromELM327();
     void StartStreaming();
     void StopStreaming();

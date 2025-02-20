@@ -1,5 +1,7 @@
 #include <Bluetooth_interfaces.h> 
 #include <UserWindow.h>
+#include <thread>
+#include <chrono>
 
 #pragma warning(disable: 4995)
 HANDLE g_bluetoothRadio; // Global handle for Bluetooth radio.
@@ -77,8 +79,11 @@ bool FindBluetoothDevice(BLUETOOTH_DEVICE_INFO* btDeviceInfo) {
     // Get radio info.   
     btInfoStatus = BluetoothGetRadioInfo(g_bluetoothRadio, &btRadioInfo);
 
-    if (btInfoStatus == ERROR_SUCCESS)		
+    if (btInfoStatus == ERROR_SUCCESS) {
         userWindow.AddMessage("Bluetooth Radio looks fine!");
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    }
+        
 
     else {
         std::cerr << "Failed to get Bluetooth adapter information (Code: " << btInfoStatus << ")." << std::endl;

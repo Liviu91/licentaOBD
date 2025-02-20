@@ -147,10 +147,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Application\Backend\CommunicationManager\CommunicationHandling\inc\Communication_interfaces.h" />
-    <ClInclude Include="Application\Backend\CommunicationManager\SerialPortHandling\inc\Serial_port_connection.h" />
     <ClInclude Include="Application\Backend\Database\inc\DatabaseManager.h" />
+    <ClInclude Include="Application\Backend\DeviceCommunicationManager\BluetoothHandling\inc\Bluetooth_interfaces.h" />
+    <ClInclude Include="Application\Backend\DeviceCommunicationManager\BluetoothHandling\inc\Bluetooth_operations.h" />
+    <ClInclude Include="Application\Backend\DeviceCommunicationManager\CommunicationHandling\inc\Communication_interfaces.h" />
     <ClInclude Include="Application\Backend\DeviceCommunicationManager\ConnectToOBD2\inc\PressConnect.h" />
+    <ClInclude Include="Application\Backend\DeviceCommunicationManager\SerialPortHandling\inc\Serial_port_connection.h" />
     <ClInclude Include="Application\UI\inc\LoginWindow.h" />
     <ClInclude Include="Application\UI\inc\TechnicianWindow.h" />
     <ClInclude Include="Application\UI\inc\UserWindow.h" />
