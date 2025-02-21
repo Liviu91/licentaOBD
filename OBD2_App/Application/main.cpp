@@ -24,7 +24,10 @@ int main(int argc, char** argv)
     int bluetooth_connection_status = 0;
     int serial_port_setup_status = 0;
 
-   
+#if __cplusplus >= 201703L
+#pragma message("C++17 is enabled!")
+#endif
+
     // Setup window
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit())
@@ -116,7 +119,7 @@ int main(int argc, char** argv)
 
         //}
         //else if (showUserWindow) {      //Show user window only after login is successful and correct credentials are provided for user
-        //    userWindow.Draw();
+        //    userWindow.Draw();n
         //}
 
         userWindow.Draw();

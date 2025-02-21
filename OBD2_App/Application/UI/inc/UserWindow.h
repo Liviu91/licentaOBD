@@ -8,6 +8,7 @@
 #include <GLFW/glfw3.h>
 #include <thread>
 #include <chrono>
+
 class UserWindow {
 public:
 
@@ -16,7 +17,9 @@ public:
     void Initialize(GLFWwindow* window);
     void AddMessage(const std::string& msg);
     void ConnectToELM327();
-    HANDLE hBluetoothPort;
+    void StartLiveDataStreaming();
+    void StopLiveDataStreaming();
+    HANDLE hBluetoothSerialPort;
 
 private:
 	bool isConnected = false;
@@ -25,14 +28,14 @@ private:
     GLFWwindow* window;
     bool isTechnicianRequestPending = false;
     std::vector<std::string> messageLog;
+    std::thread streamingThread;
     std::thread connectionThread; // Background thread
     bool isConnecting =  false; // Ensures only one connection at a time
-    
     void DisconnectFromELM327();
-    void StartStreaming();
-    void StopStreaming();
     void ManageDTCs();
     void LogData();
+    int ParseELMResponse(const std::string& response, const std::string& type);
+    void PublishLiveDataToMQTT(int rpm, int temp, int speed);
 
 };
 

@@ -21,7 +21,6 @@ ipch/
 
 # Ignore binaries
 *.exe
-*.dll
 *.lib
 *.obj
 *.pdb

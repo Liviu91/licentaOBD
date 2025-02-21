@@ -39,7 +39,7 @@ std::string ReadELM327Response(HANDLE*  hComPort) {
 
 
     // 1. Remove leading non-alphanumeric characters
-    size_t firstAlphaNum = response.find_first_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");
+    size_t firstAlphaNum = response.find_first_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,");
 
     if (firstAlphaNum != std::string::npos) {
         response.erase(0, firstAlphaNum);

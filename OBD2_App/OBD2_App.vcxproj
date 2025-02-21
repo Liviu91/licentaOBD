@@ -120,14 +120,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Database\DBFramekwork\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Dear_ImGui\glfw\glfw-master\include;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Dear_ImGui\glad\include;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\UI\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\RemoteCommunication\MQTT\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\RemoteCommunication\Clients\User\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\RemoteCommunication\Clients\Technician\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\DeviceCommunicationManager\SerialPortHandling\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\DeviceCommunicationManager\ConnectToOBD2\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\DeviceCommunicationManager\CommunicationHandling\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\DeviceCommunicationManager\BluetoothHandling\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\Database\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Dear_ImGui\ImGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Stuff\sent_from_old_laptop\duty\kit\vcpkg\installed\x64-windows\bin;C:\Stuff\sent_from_old_laptop\duty\kit\vcpkg\installed\x64-windows\include;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Database\DBFramekwork\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Dear_ImGui\glfw\glfw-master\include;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Dear_ImGui\glad\include;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\UI\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\RemoteCommunication\MQTT\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\RemoteCommunication\Clients\User\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\RemoteCommunication\Clients\Technician\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\DeviceCommunicationManager\SerialPortHandling\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\DeviceCommunicationManager\ConnectToOBD2\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\DeviceCommunicationManager\CommunicationHandling\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\DeviceCommunicationManager\BluetoothHandling\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Application\Backend\Database\inc;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Dear_ImGui\ImGui\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Dear_ImGui\glfw_libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;glfw3d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Stuff\sent_from_old_laptop\duty\kit\vcpkg\installed\x64-windows\bin;C:\Stuff\sent_from_old_laptop\duty\kit\vcpkg\installed\x64-windows\lib;C:\Stuff\sent_from_old_laptop\duty\OBD2_Diag_App\OBD2_App\Dear_ImGui\glfw_libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;glfw3d.lib;paho-mqtt3c.lib;paho-mqtt3cs.lib;paho-mqtt3a.lib;paho-mqtt3as.lib;paho-mqttpp3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -153,6 +153,11 @@
     <ClInclude Include="Application\Backend\DeviceCommunicationManager\CommunicationHandling\inc\Communication_interfaces.h" />
     <ClInclude Include="Application\Backend\DeviceCommunicationManager\ConnectToOBD2\inc\PressConnect.h" />
     <ClInclude Include="Application\Backend\DeviceCommunicationManager\SerialPortHandling\inc\Serial_port_connection.h" />
+    <ClInclude Include="Application\Backend\RemoteCommunication\Clients\Technician\inc\TechnicianPublish.h" />
+    <ClInclude Include="Application\Backend\RemoteCommunication\Clients\Technician\inc\TechnicianSubscribe.h" />
+    <ClInclude Include="Application\Backend\RemoteCommunication\Clients\User\inc\UserPublish.h" />
+    <ClInclude Include="Application\Backend\RemoteCommunication\Clients\User\inc\UserSubscribe.h" />
+    <ClInclude Include="Application\Backend\RemoteCommunication\MQTT\inc\ProcessData.h" />
     <ClInclude Include="Application\UI\inc\LoginWindow.h" />
     <ClInclude Include="Application\UI\inc\TechnicianWindow.h" />
     <ClInclude Include="Application\UI\inc\UserWindow.h" />
@@ -176,6 +181,11 @@
     <ClCompile Include="Application\Backend\DeviceCommunicationManager\CommunicationHandling\src\Communication_interfaces.cpp" />
     <ClCompile Include="Application\Backend\DeviceCommunicationManager\ConnectToOBD2\src\PressConnect.cpp" />
     <ClCompile Include="Application\Backend\DeviceCommunicationManager\SerialPortHandling\src\Serial_port_connection.cpp" />
+    <ClCompile Include="Application\Backend\RemoteCommunication\Clients\Technician\src\TechnicianPublish.cpp" />
+    <ClCompile Include="Application\Backend\RemoteCommunication\Clients\Technician\src\TechnicianSubscribe.cpp" />
+    <ClCompile Include="Application\Backend\RemoteCommunication\Clients\User\src\UserPublish.cpp" />
+    <ClCompile Include="Application\Backend\RemoteCommunication\Clients\User\src\UserSubscribe.cpp" />
+    <ClCompile Include="Application\Backend\RemoteCommunication\MQTT\src\ProcessData.cpp" />
     <ClCompile Include="Application\main.cpp" />
     <ClCompile Include="Application\UI\src\LoginWindow.cpp" />
     <ClCompile Include="Application\UI\src\TechnicianWindow.cpp" />
