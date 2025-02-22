@@ -4,15 +4,14 @@
 #include <iostream>
 
 UserPublish::UserPublish() {
-    client = new mqtt::async_client(serverAddress, clientId);
+    client = std::make_unique<mqtt::async_client>(serverAddress, clientId);
     Connect();
 }
 
 UserPublish::~UserPublish() {
-    if (client->is_connected()) {
+    if (client && client->is_connected()) {
         client->disconnect()->wait();
     }
-    delete client;
 }
 
 void UserPublish::Connect() {
@@ -30,7 +29,8 @@ void UserPublish::Connect() {
     }
 }
 
-bool UserPublish::Publish(const std::string& topic, std::string& payload) {
+bool UserPublish::Publish(const std::string& topic, const std::string& payload) {
+  //  client = std::make_unique<mqtt::async_client>(serverAddress, clientId);
     //if (!client->is_connected()) {
     //    std::cerr << "MQTT client is not connected. Attempting to reconnect..." << std::endl;
     //    //Connect();

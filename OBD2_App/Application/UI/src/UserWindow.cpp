@@ -12,7 +12,7 @@
 #include <chrono>
 #include <thread>
 
-UserWindow::UserWindow() : isConnected(false), isStreaming(false), isLogging(false), isTechnicianRequestPending(false), hBluetoothSerialPort(NULL)
+UserWindow::UserWindow() : isConnected(false), isStreaming(false), isLogging(false), isTechnicianRequestPending(false), hBluetoothSerialPort(NULL), mqttPublisher()
 {
     
 }
@@ -113,7 +113,7 @@ int UserWindow::ParseELMResponse(const std::string& response, const std::string&
 
 void UserWindow::PublishLiveDataToMQTT(int rpm, int temp, int speed) {
     
-    UserPublish mqttPublisher;
+    
     //const std::string caca = "caca";
     mqttPublisher.Publish("car/engine/rpm", std::to_string(rpm));
     mqttPublisher.Publish("car/engine/coolant_temp", std::to_string(temp));
