@@ -8,7 +8,7 @@
 class UserPublish {
 public:
     UserPublish();
-    ~UserPublish();
+    //~UserPublish();
     bool Publish(const std::string& topic, const std::string& payload);
 
 private:

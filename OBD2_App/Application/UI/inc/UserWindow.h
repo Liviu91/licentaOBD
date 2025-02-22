@@ -8,6 +8,7 @@
 #include <GLFW/glfw3.h>
 #include <thread>
 #include <chrono>
+#include "UserPublish.h"
 
 class UserWindow {
 public:
@@ -30,6 +31,7 @@ private:
     std::vector<std::string> messageLog;
     std::thread streamingThread;
     std::thread connectionThread; // Background thread
+
     bool isConnecting =  false; // Ensures only one connection at a time
     void DisconnectFromELM327();
     void ManageDTCs();

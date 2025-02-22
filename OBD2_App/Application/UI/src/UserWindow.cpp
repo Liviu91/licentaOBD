@@ -14,7 +14,7 @@
 
 UserWindow::UserWindow() : isConnected(false), isStreaming(false), isLogging(false), isTechnicianRequestPending(false), hBluetoothSerialPort(NULL)
 {
-
+    
 }
 
 void UserWindow::Initialize(GLFWwindow* window)
@@ -33,7 +33,7 @@ void UserWindow::ConnectToELM327() {
         AddMessage("Connecting to ELM327...");
 
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        if (!Connect_With_ELM327_via_Bluetooth() && !SetupSerialPort(&hBluetoothSerialPort) && !InitializeELM327(&hBluetoothSerialPort))
+        if (1/*!Connect_With_ELM327_via_Bluetooth() && !SetupSerialPort(&hBluetoothSerialPort) && !InitializeELM327(&hBluetoothSerialPort)*/)
             isConnecting = false;
             isConnected = true;
         });
@@ -68,9 +68,9 @@ void UserWindow::StartLiveDataStreaming() {
 
     streamingThread = std::thread([this]() {
         while (isStreaming) {
-            std::string rpmResponse = AskELM327(&hBluetoothSerialPort, "AT E0"); // Request Engine RPM
-            std::string tempResponse = AskELM327(&hBluetoothSerialPort, "AT E0"); // Request Engine Coolant Temp
-            std::string speedResponse = AskELM327(&hBluetoothSerialPort, "AT E0"); // Request Vehicle Speed
+            std::string rpmResponse = "OK";//AskELM327(&hBluetoothSerialPort, "AT E0"); // Request Engine RPM
+            std::string tempResponse = "OK";//AskELM327(&hBluetoothSerialPort, "AT E0"); // Request Engine Coolant Temp
+            std::string speedResponse = "OK";//AskELM327(&hBluetoothSerialPort, "AT E0"); // Request Vehicle Speed
 
             if (!rpmResponse.empty() || !tempResponse.empty() || !speedResponse.empty()) {
                 int rpm = 111;//ParseELMResponse(rpmResponse, "RPM");
@@ -112,10 +112,12 @@ int UserWindow::ParseELMResponse(const std::string& response, const std::string&
 }
 
 void UserWindow::PublishLiveDataToMQTT(int rpm, int temp, int speed) {
+    
     UserPublish mqttPublisher;
-    /*mqttPublisher.Publish("car/engine/rpm", std::to_string(rpm));
+    //const std::string caca = "caca";
+    mqttPublisher.Publish("car/engine/rpm", std::to_string(rpm));
     mqttPublisher.Publish("car/engine/coolant_temp", std::to_string(temp));
-    mqttPublisher.Publish("car/vehicle/speed", std::to_string(speed));*/
+    mqttPublisher.Publish("car/vehicle/speed", std::to_string(speed));
 }
 
 void UserWindow::Draw() {
