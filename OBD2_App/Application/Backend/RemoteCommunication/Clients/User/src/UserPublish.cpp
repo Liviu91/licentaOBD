@@ -6,18 +6,23 @@
 UserPublish::UserPublish()
     : client(std::make_unique<mqtt::client>(serverAddress, clientId)),
     connOpts()
-{
+{ 
     connOpts.set_clean_session(true);
+    connOpts.set_keep_alive_interval(20);
+    connOpts.set_mqtt_version(MQTTVERSION_3_1_1);
 }
-
 UserPublish::~UserPublish() {
     try {
         if (client && client->is_connected()) {
             client->disconnect();
         }
     }
+   
     catch (const mqtt::exception& exc) {
-        std::cerr << "MQTT disconnection exception: " << exc.what() << std::endl;
+        std::cerr << "MQTT connection exception (" << exc.get_reason_code() << "): " << exc.what() << std::endl;
+    }
+    catch (const std::exception& exc) {
+        std::cerr << "General exception: " << exc.what() << std::endl;
     }
 }
 

@@ -16,7 +16,7 @@ public:
 private:
 
     
-    const std::string serverAddress = "tcp://localhost:1884";
+    const std::string serverAddress = "tcp://127.0.0.1:1884";// "tcp://localhost:1884";
     const std::string clientId = "UserPublisher";
     mqtt::connect_options connOpts;
 
