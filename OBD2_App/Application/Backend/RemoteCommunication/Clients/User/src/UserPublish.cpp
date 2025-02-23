@@ -17,12 +17,8 @@ UserPublish::~UserPublish() {
             client->disconnect();
         }
     }
-   
     catch (const mqtt::exception& exc) {
-        std::cerr << "MQTT connection exception (" << exc.get_reason_code() << "): " << exc.what() << std::endl;
-    }
-    catch (const std::exception& exc) {
-        std::cerr << "General exception: " << exc.what() << std::endl;
+        std::cerr << "MQTT disconnection exception: " << exc.what() << std::endl;
     }
 }
 
@@ -39,7 +35,10 @@ void UserPublish::Connect() {
         }
     }
     catch (const mqtt::exception& exc) {
-        std::cerr << "MQTT connection exception: " << exc.what() << std::endl;
+        std::cerr << "MQTT connection exception (" << exc.get_reason_code() << "): " << exc.what() << std::endl;
+    }
+    catch (const std::exception& exc) {
+        std::cerr << "General exception: " << exc.what() << std::endl;
     }
 }
 
