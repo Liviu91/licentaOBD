@@ -21,6 +21,7 @@ public:
     void StartLiveDataStreaming();
     void StopLiveDataStreaming();
     HANDLE hBluetoothSerialPort;
+    UserPublish mqttPublisher;
 
 private:
 	bool isConnected = false;
@@ -31,7 +32,11 @@ private:
     std::vector<std::string> messageLog;
     std::thread streamingThread;
     std::thread connectionThread; // Background thread
+<<<<<<< HEAD
     UserPublish mqttPublisher;
+=======
+   
+>>>>>>> c3d9484 (MQTT connection exception: MQTT error [-1]: TCP/TLS connect failure)
     bool isConnecting =  false; // Ensures only one connection at a time
     void DisconnectFromELM327();
     void ManageDTCs();
