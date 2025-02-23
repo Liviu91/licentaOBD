@@ -118,15 +118,10 @@ int UserWindow::ParseELMResponse(const std::string& response, const std::string&
 
 void UserWindow::PublishLiveDataToMQTT(int rpm, int temp, int speed) {
     
-<<<<<<< HEAD
-    
-    //const std::string caca = "caca";
-=======
     if (!mqttPublisher.client->is_connected()) {
         AddMessage("Reconnecting to MQTT broker...");
         mqttPublisher.Connect();  // Explicit connection
     }
->>>>>>> c3d9484 (MQTT connection exception: MQTT error [-1]: TCP/TLS connect failure)
     mqttPublisher.Publish("car/engine/rpm", std::to_string(rpm));
     mqttPublisher.Publish("car/engine/coolant_temp", std::to_string(temp));
     mqttPublisher.Publish("car/vehicle/speed", std::to_string(speed));

@@ -3,16 +3,6 @@
 #include <mqtt/client.h>
 #include <iostream>
 
-<<<<<<< HEAD
-UserPublish::UserPublish() {
-    client = std::make_unique<mqtt::async_client>(serverAddress, clientId);
-    Connect();
-}
-
-UserPublish::~UserPublish() {
-    if (client && client->is_connected()) {
-        client->disconnect()->wait();
-=======
 UserPublish::UserPublish()
     : client(std::make_unique<mqtt::client>(serverAddress, clientId)),
     connOpts()
@@ -28,7 +18,6 @@ UserPublish::~UserPublish() {
     }
     catch (const mqtt::exception& exc) {
         std::cerr << "MQTT disconnection exception: " << exc.what() << std::endl;
->>>>>>> c3d9484 (MQTT connection exception: MQTT error [-1]: TCP/TLS connect failure)
     }
 }
 
@@ -50,10 +39,6 @@ void UserPublish::Connect() {
 }
 
 bool UserPublish::Publish(const std::string& topic, const std::string& payload) {
-<<<<<<< HEAD
-  //  client = std::make_unique<mqtt::async_client>(serverAddress, clientId);
-=======
->>>>>>> c3d9484 (MQTT connection exception: MQTT error [-1]: TCP/TLS connect failure)
     //if (!client->is_connected()) {
     //    std::cerr << "MQTT client is not connected. Attempting to reconnect..." << std::endl;
     //    //Connect();
